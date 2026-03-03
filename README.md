@@ -2,7 +2,7 @@
   <h1>🚀 Gripz AI Website</h1>
   <p><strong>Intelligence at Your Fingertips</strong></p>
   
-  <p>Official website for Gripz AI - The world's first IoT-enabled smart handlebar grip transforming two-wheelers into intelligent, connected, and safer mobility systems.</p>
+  <p> Official website for Gripz AI - The world's first IoT-enabled smart handlebar grip transforming two-wheelers into intelligent, connected, and safer mobility systems.</p>
   
   ![Next.js](https://img.shields.io/badge/Next.js-14.0-black?style=for-the-badge&logo=next.js)
   ![React](https://img.shields.io/badge/React-18.2-61DAFB?style=for-the-badge&logo=react)
@@ -27,36 +27,15 @@
 
 ---
 
-## 🎯 About
+Introduction
 
-Gripz AI is revolutionizing two-wheeler safety through innovative IoT technology. This website showcases our smart handlebar grip system that provides:
-
-- **Haptic Navigation** - Eye-free turn-by-turn guidance
-- **Accident Detection** - Real-time safety monitoring
-- **Fleet Intelligence** - Telematics and analytics
-- **Group Sync** - Coordinated group rides
+Gripz AI is revolutionizing two-wheeler safety through innovative and patented IoT technology. This website showcases our smart handlebar grip system!
 
 Visit the live site: **[gripz.ai](https://gripz.ai)** *(coming soon)*
 
 ---
 
-## ✨ Features
-
-### Design
-- 🎨 **Refined Hardware-Tech Aesthetic** - Dark, sophisticated design inspired by premium hardware companies
-- ✨ **Smooth Animations** - Subtle, sophisticated micro-interactions throughout
-- 📱 **Fully Responsive** - Optimized for mobile, tablet, and desktop
-- ⚡ **Fast Loading** - Static site generation for instant page loads
-
-### Technical
-- 🚀 **Production Ready** - Built with Next.js 14 for optimal performance
-- 🔍 **SEO Optimized** - Meta tags, semantic HTML, and Open Graph support
-- ♿ **Accessible** - WCAG compliant with proper ARIA labels
-- 🎯 **Zero Dependencies** - Minimal JavaScript bundle size
-
----
-
-## 🛠️ Tech Stack
+Tech Stack
 
 | Technology | Purpose |
 |------------|---------|
@@ -68,9 +47,9 @@ Visit the live site: **[gripz.ai](https://gripz.ai)** *(coming soon)*
 
 ---
 
-## 🚀 Getting Started
+How to Get Started
 
-### Prerequisites
+Prerequisites
 
 Before you begin, ensure you have:
 - **Node.js 18.0+** installed ([Download here](https://nodejs.org/))
@@ -99,7 +78,7 @@ Before you begin, ensure you have:
    
    Navigate to [http://localhost:3000](http://localhost:3000)
 
-### Building for Production
+>> Building for Production
 
 ```bash
 # Create optimized production build
@@ -110,41 +89,7 @@ npm run build
 
 ---
 
-## 🌐 Deployment
-
-### Deploy to Vercel (Recommended)
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/YOUR_USERNAME/gripz-website)
-
-#### Step-by-Step Deployment
-
-1. **Push to GitHub** (see commands below)
-2. **Import to Vercel**
-   - Go to [vercel.com](https://vercel.com)
-   - Sign in with GitHub
-   - Click "Add New Project"
-   - Import your `gripz-website` repository
-   - Vercel auto-detects Next.js settings
-   - Click "Deploy"
-3. **Connect Custom Domain**
-   - In Vercel dashboard: Settings → Domains
-   - Add `gripz.ai`
-   - Follow Vercel's DNS instructions
-
-#### DNS Configuration (Namecheap)
-
-Add these records in Namecheap's "Advanced DNS" section:
-
-| Type | Host | Value | TTL |
-|------|------|-------|-----|
-| A Record | @ | `76.76.21.21` | Automatic |
-| CNAME | www | `cname.vercel-dns.com` | Automatic |
-
-**Propagation time:** 10-60 minutes
-
----
-
-## 📁 Project Structure
+Project Structure
 
 ```
 gripz-website/
@@ -168,7 +113,7 @@ gripz-website/
 
 ---
 
-## 🎨 Customization
+## Customization
 
 ### Change Colors
 
@@ -236,7 +181,7 @@ const stats = [
 
 ---
 
-## 📊 Performance
+##  Performance
 
 - **Lighthouse Score:** 95+ (Performance, Accessibility, Best Practices, SEO)
 - **First Contentful Paint:** <1s
@@ -253,20 +198,7 @@ const stats = [
 
 ---
 
-## 🌍 Browser Support
-
-| Browser | Version |
-|---------|---------|
-| Chrome | Last 2 versions ✅ |
-| Firefox | Last 2 versions ✅ |
-| Safari | Last 2 versions ✅ |
-| Edge | Last 2 versions ✅ |
-| Mobile Safari | iOS 12+ ✅ |
-| Chrome Mobile | Last 2 versions ✅ |
-
----
-
-## 🤝 Contributing
+## Contributing
 
 This is a proprietary project for Gripz AI. For internal contributions:
 
@@ -290,30 +222,19 @@ This is a proprietary project for Gripz AI. For internal contributions:
 
 ---
 
-## 📞 Support & Contact
+## Please Support & Contact the poor Founder!
 
 - **Website:** [gripz.ai](https://gripz.ai)
-- **Email:** hello@gripz.ai
+- **Email:** surya@gripz.ai
 - **Issues:** Use [GitHub Issues](https://github.com/YOUR_USERNAME/gripz-website/issues) for bug reports
-
-For enterprise inquiries and partnerships: **hello@gripz.ai**
 
 ---
 
 ## 📄 License
 
-**Proprietary** - © 2024 Gripz AI. All rights reserved.
+**Proprietary** - © 2026 Gripz AI. All rights reserved.
 
 This project and its contents are the intellectual property of Gripz AI and may not be reproduced, distributed, or used without explicit permission.
-
----
-
-## 🙏 Acknowledgments
-
-- Design inspired by [Shinkei Systems](https://shinkei.systems/), [Norra](https://www.norra.io/), and [Tornyol](https://tornyol.com/)
-- Built with [Next.js](https://nextjs.org/) by Vercel
-- Hosted on [Vercel](https://vercel.com/)
-- Typography by [Google Fonts](https://fonts.google.com/)
 
 ---
 
