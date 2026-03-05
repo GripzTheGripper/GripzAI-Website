@@ -1,5 +1,94 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+/* Video Modal Styles */
+.video-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  animation: fadeIn 0.3s ease;
+}
 
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.video-modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  aspect-ratio: 16 / 9;
+  background: var(--color-bg);
+  border-radius: 1rem;
+  overflow: hidden;
+  animation: slideUp 0.4s var(--ease-out-expo);
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-close {
+  position: absolute;
+  top: -3rem;
+  right: 0;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 10001;
+  transition: transform 0.3s ease;
+}
+
+.modal-close:hover {
+  transform: rotate(90deg);
+}
+
+.video-container {
+  width: 100%;
+  height: 100%;
+}
+
+.video-container iframe {
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .video-modal {
+    padding: 1rem;
+  }
+  
+  .modal-close {
+    top: -2.5rem;
+    font-size: 1.5rem;
+  }
+}
+```
+
+---
+
+## 🎯 How to Get Your YouTube Video ID
+
+1. Go to your YouTube video
+2. Look at the URL, it will be something like:
+```
+   https://www.youtube.com/watch?v=z8aba3sh2T0
 /* Video Modal Styles */
 .video-modal {
   position: fixed;
