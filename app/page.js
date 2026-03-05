@@ -6,6 +6,7 @@ import './globals.css';
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [activeFeature, setActiveFeature] = useState(0);
+  const [showVideoModal, setShowVideoModal] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,6 +15,9 @@ export default function Home() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+  const handleWatchDemo = () => {
+  setShowVideoModal(true);
+};
 
   const features = [
     {
@@ -47,6 +51,29 @@ export default function Home() {
   return (
     <div className="page-container">
       {/* Navigation */}
+    return (
+  <div className="page-container">
+    {/* Video Modal */}
+    {showVideoModal && (
+      <div className="video-modal" onClick={() => setShowVideoModal(false)}>
+        <div className="video-modal-content" onClick={(e) => e.stopPropagation()}>
+          <button className="modal-close" onClick={() => setShowVideoModal(false)}>✕</button>
+          <div className="video-container">
+            <iframe
+              width="100%"
+              height="100%"
+              src="https://www.youtube.com/embed/z8aba3sh2T0?autoplay=1"
+              title="Gripz AI Demo"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    )}
+
+    {/* Navigation */}
       <nav className={`nav ${scrolled ? 'scrolled' : ''}`}>
         <div className="nav-content">
           <div className="logo">
@@ -77,8 +104,8 @@ export default function Home() {
           two-wheelers into intelligent, connected, and safer mobility systems.
         </p>
         <div className="hero-cta">
-          <button className="btn-primary">Join Beta Program</button>
-          <button className="btn-secondary">Watch Demo</button>
+          <button className="btn-primary" onClick={handleWatchDemo}>Join Beta Program</button>
+          <button className="btn-secondary" onClick={handleWatchDemo}>Watch Demo</button>
         </div>
         <div className="scroll-indicator">
           <div className="scroll-line"></div>
