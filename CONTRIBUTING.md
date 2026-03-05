@@ -322,7 +322,7 @@ We welcome feature ideas! Please:
 
 ## 📞 Questions?
 
-- Email: hello@gripz.ai
+- Email: surya@gripz.ai
 - Create a GitHub Discussion
 - Ask in team Slack channel
 
