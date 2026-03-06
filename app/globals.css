@@ -553,7 +553,7 @@ img { display: block; max-width: 100%; }
   border: 1px solid var(--border);
   border-radius: 1.25rem;
   transition: border-color 0.3s ease, background 0.3s ease;
-  text-align: center;        👈 ADD THIS LINE
+  text-align: center; 
 }
 .feature-card:hover,
 .feature-card.active {
