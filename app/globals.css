@@ -57,7 +57,7 @@ img { display: block; max-width: 100%; }
 
 .label {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: var(--green);
@@ -293,6 +293,7 @@ img { display: block; max-width: 100%; }
   height: 56px;
   background: var(--border);
   overflow: hidden;
+  display: none;
 }
 
 .hero-scroll::after {
@@ -367,7 +368,7 @@ img { display: block; max-width: 100%; }
   display: block;
   margin-bottom: 2rem;
   color: var(--text-2);
-  font-size: 0.85rem !important;
+  font-size: 1.5rem !important;
   letter-spacing: 0.18em;
 }
 
@@ -563,8 +564,8 @@ img { display: block; max-width: 100%; }
   border: 1px solid var(--border);
   border-radius: 1.25rem;
   transition: border-color 0.3s ease, background 0.3s ease;
+  text-align: center;        👈 ADD THIS LINE
 }
-
 .feature-card:hover,
 .feature-card.active {
   border-color: var(--border-hover);
@@ -581,6 +582,8 @@ img { display: block; max-width: 100%; }
   justify-content: center;
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
+   margin-left: auto;
+   margin-right: auto; 
   transition: border-color 0.3s ease;
 }
 
@@ -1061,7 +1064,11 @@ img { display: block; max-width: 100%; }
 @media (max-width: 1024px) {
   .hero-scroll { display: none; }
 }
-
+@media (min-width: 1280px) {
+  .hero-scroll {
+    display: block;
+  }
+}
 @media (max-width: 768px) {
   :root { --section-pad: 5rem 0; --content-pad: 0 1.5rem; }
 
