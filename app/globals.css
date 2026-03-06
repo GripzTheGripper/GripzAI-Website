@@ -392,11 +392,11 @@ img { display: block; max-width: 100%; }
   align-items: center;
   justify-content: center;
   min-width: 140px;
-  height: 88px;   /* was 56px — taller container for bigger logos */
+  height: 90px;   /* was 56px — taller container for bigger logos */
 }
 
 .ticker-logo {
-  height: 78px;              /* bumped to 60px — larger logos */
+  height: 88px;              /* bumped to 60px — larger logos */
   width: auto;
   object-fit: contain;
   filter: none;              /* was brightness(0) invert(1) — now real colours */
