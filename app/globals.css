@@ -312,7 +312,7 @@ img { display: block; max-width: 100%; }
 
 .ticker-label {
   text-align: center;
-  display: block;
+   display: block;
   margin-bottom: 2rem;
   color: var(--text-2);
   font-size: 1.5rem !important;
@@ -511,7 +511,7 @@ img { display: block; max-width: 100%; }
   border: 1px solid var(--border);
   border-radius: 1.25rem;
   transition: border-color 0.3s ease, background 0.3s ease;
-  text-align: center; 
+  text-align: center;
 }
 .feature-card:hover,
 .feature-card.active {
@@ -561,7 +561,7 @@ img { display: block; max-width: 100%; }
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   text-align: center;
-  position: relative;
+   position: relative;
 }
 
 .stat-block {
