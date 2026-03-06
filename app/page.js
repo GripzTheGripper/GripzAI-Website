@@ -3,338 +3,418 @@
 import { useState, useEffect } from 'react';
 import './globals.css';
 
+/* ============================================================
+   DATA
+   ============================================================ */
+const FEATURES = [
+  {
+    icon: '⟳',
+    title: 'Haptic Navigation',
+    description:
+      'Eye-free turn-by-turn guidance through intuitive vibration patterns. Navigate safely without looking at your screen.',
+  },
+  {
+    icon: '⚡',
+    title: 'Accident Detection',
+    description:
+      'Advanced gyroscope and IMU sensors detect abnormal tilts and crashes, triggering instant SOS alerts.',
+  },
+  {
+    icon: '◉',
+    title: 'Fleet Intelligence',
+    description:
+      'Real-time telematics, behaviour analytics, and carbon tracking for modern mobility platforms.',
+  },
+  {
+    icon: '⊙',
+    title: 'Group Sync',
+    description:
+      'Leader-follower route coordination for seamless group rides and delivery coordination.',
+  },
+];
+
+const STATS = [
+  { value: '6–10 hrs', label: 'Daily rider screen exposure' },
+  { value: '100K+',   label: 'Gig riders in India' },
+  { value: '40%',     label: 'Accident reduction potential' },
+];
+
+const SPECS = [
+  { name: 'ESP-based MCU',  detail: 'Bluetooth & Wi-Fi connectivity' },
+  { name: '6-axis IMU',     detail: 'Accident & tilt detection' },
+  { name: 'Haptic Motors',  detail: 'Directional vibration feedback' },
+];
+
+const IMPACT = [
+  { icon: '↓', title: 'Reduce Accidents',   desc: 'Eliminate screen distraction for millions of riders' },
+  { icon: '↑', title: 'Optimise Routes',    desc: 'AI-driven navigation reduces fuel consumption' },
+  { icon: '○', title: 'Enable Innovation',  desc: 'Data platform for fleet optimisation & insurance' },
+];
+
+/* ============================================================
+   COMPONENT
+   ============================================================ */
 export default function Home() {
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled,      setScrolled]      = useState(false);
   const [activeFeature, setActiveFeature] = useState(0);
-  const [showVideoModal, setShowVideoModal] = useState(false);
+  const [showModal,     setShowModal]     = useState(false);
+  const [email,         setEmail]         = useState('');
+  const [submitted,     setSubmitted]     = useState(false);
 
+  /* Scroll listener for sticky nav */
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
-  const handleWatchDemo = () => {
-  setShowVideoModal(true);
-};
 
-  const features = [
-    {
-      title: "Haptic Navigation",
-      description: "Eye-free turn-by-turn guidance through intuitive vibration patterns. Navigate safely without looking at your screen.",
-      icon: "⟳"
-    },
-    {
-      title: "Accident Detection",
-      description: "Advanced gyroscope and IMU sensors detect abnormal tilts and crashes, triggering instant SOS alerts.",
-      icon: "⚡"
-    },
-    {
-      title: "Fleet Intelligence",
-      description: "Real-time telematics, behavior analytics, and carbon tracking for modern mobility platforms.",
-      icon: "◉"
-    },
-    {
-      title: "Group Sync",
-      description: "Leader-follower route coordination for seamless group rides and delivery coordination.",
-      icon: "⊙"
-    }
-  ];
+  /* Lock body scroll when modal open */
+  useEffect(() => {
+    document.body.style.overflow = showModal ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [showModal]);
 
-  const stats = [
-    { value: "6-10hrs", label: "Daily rider exposure" },
-    { value: "100K+", label: "Gig riders in India" },
-    { value: "40%", label: "Accident reduction potential" }
-  ];
+  /* Form submit handler */
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!email) return;
+    setSubmitted(true);
+  }
 
   return (
-    <div className="page-container">
-      {/* Navigation */}
-    return (
-  <div className="page-container">
-    {/* Video Modal */}
-    {showVideoModal && (
-      <div className="video-modal" onClick={() => setShowVideoModal(false)}>
-        <div className="video-modal-content" onClick={(e) => e.stopPropagation()}>
-          <button className="modal-close" onClick={() => setShowVideoModal(false)}>✕</button>
-          <div className="video-container">
+    <div>
+
+      {/* ── VIDEO MODAL ── */}
+      {showModal && (
+        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+          <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={() => setShowModal(false)} aria-label="Close">✕</button>
             <iframe
-              width="100%"
-              height="100%"
               src="https://www.youtube.com/embed/z8aba3sh2T0?autoplay=1"
               title="Gripz AI Demo"
-              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
-            ></iframe>
+            />
           </div>
         </div>
-      </div>
-    )}
+      )}
 
-    {/* Navigation */}
-      <nav className={`nav ${scrolled ? 'scrolled' : ''}`}>
-        <div className="nav-content">
-          <div className="logo">
-            <span className="logo-text">GRIPZ</span>
-            <span className="logo-ai">AI</span>
-          </div>
-          <div className="nav-links">
-            <a href="#product">Product</a>
-            <a href="#technology">Technology</a>
-            <a href="#contact" className="contact-btn">Contact</a>
-          </div>
+      {/* ── NAVIGATION ── */}
+      <nav className={`nav${scrolled ? ' scrolled' : ''}`} aria-label="Main navigation">
+        <div className="nav-inner">
+          <a href="/" className="nav-logo" aria-label="Gripz AI home">
+            <img src="/logo.png" alt="Gripz AI" className="nav-logo-img" />
+          </a>
+          <ul className="nav-links">
+            <li><a href="#product">Product</a></li>
+            <li><a href="#technology">Technology</a></li>
+            <li><a href="#contact" className="nav-cta">Contact</a></li>
+          </ul>
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="hero">
-        <div className="hero-badge">
-          <span className="badge-dot"></span>
+      {/* ── HERO ── */}
+      <section className="hero" aria-label="Hero">
+        <div className="hero-glow" aria-hidden="true" />
+
+        <div className="hero-badge label">
+          <span className="badge-dot" aria-hidden="true" />
           DeepTech Mobility
         </div>
-        <h1 className="hero-title">
+
+        <h1 className="hero-title display">
           Intelligence at
           <br />
           <span className="gradient-text">Your Fingertips</span>
         </h1>
-        <p className="hero-subtitle">
-          The world's first IoT-enabled smart handlebar grip, transforming<br />
+
+        <p className="hero-sub">
+          The world's first IoT-enabled smart handlebar grip — transforming
           two-wheelers into intelligent, connected, and safer mobility systems.
         </p>
-        <div className="hero-cta">
-          <button className="btn-primary" onClick={handleWatchDemo}>Join Beta Program</button>
-          <button className="btn-secondary" onClick={handleWatchDemo}>Watch Demo</button>
+
+        <div className="hero-actions">
+          <button className="btn btn-primary" onClick={() => setShowModal(true)}>
+            Join Beta Program
+          </button>
+          <button className="btn btn-ghost" onClick={() => setShowModal(true)}>
+            Watch Demo ↗
+          </button>
         </div>
-        <div className="scroll-indicator">
-          <div className="scroll-line"></div>
-        </div>
+
+        <div className="hero-scroll" aria-hidden="true" />
       </section>
 
-      {/* Problem Statement */}
-      <section className="problem-section">
-        <div className="section-container">
+      {/* ── PROBLEM ── */}
+      <section className="problem-section" aria-labelledby="problem-heading">
+        <div className="container">
           <div className="section-header">
-            <span className="section-label">The Challenge</span>
-            <h2 className="section-title">Distraction is deadly</h2>
+            <span className="label">The Challenge</span>
+            <h2 id="problem-heading" className="section-title display">
+              Distraction is deadly
+            </h2>
           </div>
           <div className="problem-grid">
-            <div className="problem-card">
-              <div className="problem-number">01</div>
-              <h3>Screen Dependency</h3>
-              <p>Riders constantly glance at phones for navigation, increasing cognitive load and reaction time by 40%.</p>
-            </div>
-            <div className="problem-card">
-              <div className="problem-number">02</div>
-              <h3>Gig Economy Risk</h3>
-              <p>Delivery riders operate 6-10 hours daily under time pressure, amplifying accident risk exponentially.</p>
-            </div>
-            <div className="problem-card">
-              <div className="problem-number">03</div>
-              <h3>No Retrofit Solutions</h3>
-              <p>Existing safety tech is either expensive, helmet-bound, or requires vehicle replacement.</p>
-            </div>
+            {[
+              {
+                n: '01',
+                title: 'Screen Dependency',
+                body: 'Riders constantly glance at phones for navigation, increasing cognitive load and reaction time by 40%.',
+              },
+              {
+                n: '02',
+                title: 'Gig Economy Risk',
+                body: 'Delivery riders operate 6–10 hours daily under time pressure, amplifying accident risk exponentially.',
+              },
+              {
+                n: '03',
+                title: 'No Retrofit Solutions',
+                body: 'Existing safety tech is expensive, helmet-bound, or requires a full vehicle replacement.',
+              },
+            ].map((card) => (
+              <div className="problem-card" key={card.n}>
+                <span className="problem-num">{card.n}</span>
+                <h3>{card.title}</h3>
+                <p>{card.body}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Product Showcase */}
-      <section className="product-section" id="product">
-        <div className="section-container">
+      {/* ── PRODUCT ── */}
+      <section className="product-section section" id="product" aria-labelledby="product-heading">
+        <div className="container">
           <div className="product-layout">
-            <div className="product-visual">
-              <div className="product-mockup">
-                <div className="grip-outline">
-                  <div className="grip-sensor"></div>
-                  <div className="grip-sensor"></div>
-                  <div className="grip-sensor"></div>
-                  <div className="haptic-pulse"></div>
-                </div>
-              </div>
+
+            {/* Image */}
+            <div className="product-image-wrap">
+              <div className="product-image-bg" aria-hidden="true" />
+              <img
+                src="/product-grip.png"
+                alt="Gripz AI smart handlebar grip"
+                className="product-img"
+              />
             </div>
+
+            {/* Info */}
             <div className="product-info">
-              <span className="section-label">Smart Grip System</span>
-              <h2 className="section-title">Retrofit intelligence<br />for every handlebar</h2>
-              <p className="product-description">
-                A universal, vehicle-agnostic grip that embeds haptic motors, 
+              <span className="label">Smart Grip System</span>
+              <h2 id="product-heading" className="section-title display">
+                Retrofit intelligence
+                <br />
+                for every handlebar
+              </h2>
+              <p className="product-desc">
+                A universal, vehicle-agnostic grip that embeds haptic motors,
                 gyroscopes, and connectivity directly into the rider's natural touchpoint.
               </p>
-              <div className="tech-specs">
-                <div className="spec">
-                  <div className="spec-icon">●</div>
-                  <div>
-                    <div className="spec-title">ESP-based MCU</div>
-                    <div className="spec-detail">Bluetooth & WiFi connectivity</div>
+              <div className="specs">
+                {SPECS.map((s) => (
+                  <div className="spec-row" key={s.name}>
+                    <div className="spec-dot" aria-hidden="true" />
+                    <div>
+                      <div className="spec-name">{s.name}</div>
+                      <div className="spec-detail">{s.detail}</div>
+                    </div>
                   </div>
-                </div>
-                <div className="spec">
-                  <div className="spec-icon">●</div>
-                  <div>
-                    <div className="spec-title">6-axis IMU</div>
-                    <div className="spec-detail">Accident & tilt detection</div>
-                  </div>
-                </div>
-                <div className="spec">
-                  <div className="spec-icon">●</div>
-                  <div>
-                    <div className="spec-title">Haptic Motors</div>
-                    <div className="spec-detail">Directional vibration feedback</div>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
+
           </div>
         </div>
       </section>
 
-      {/* Features */}
-      <section className="features-section" id="technology">
-        <div className="section-container">
-          <div className="section-header centered">
-            <span className="section-label">Core Features</span>
-            <h2 className="section-title">Eye-free, intelligent,<br />always connected</h2>
+      {/* ── FEATURES ── */}
+      <section className="features-section section" id="technology" aria-labelledby="features-heading">
+        <div className="container">
+          <div className="section-header">
+            <span className="label">Core Features</span>
+            <h2 id="features-heading" className="section-title display">
+              Eye-free, intelligent,
+              <br />
+              always connected
+            </h2>
           </div>
           <div className="features-grid">
-            {features.map((feature, index) => (
-              <div 
-                key={index}
-                className={`feature-card ${activeFeature === index ? 'active' : ''}`}
-                onMouseEnter={() => setActiveFeature(index)}
+            {FEATURES.map((f, i) => (
+              <div
+                key={f.title}
+                className={`feature-card${activeFeature === i ? ' active' : ''}`}
+                onMouseEnter={() => setActiveFeature(i)}
               >
-                <div className="feature-icon">{feature.icon}</div>
-                <h3 className="feature-title">{feature.title}</h3>
-                <p className="feature-description">{feature.description}</p>
+                <div className="feature-icon-wrap" aria-hidden="true">{f.icon}</div>
+                <h3>{f.title}</h3>
+                <p>{f.description}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="stats-section">
-        <div className="section-container">
-          <div className="stats-grid">
-            {stats.map((stat, index) => (
-              <div key={index} className="stat-item">
-                <div className="stat-value">{stat.value}</div>
-                <div className="stat-label">{stat.label}</div>
+      {/* ── STATS ── */}
+      <section className="stats-section" aria-label="Key statistics">
+        <div className="container">
+          <div className="stats-row">
+            {STATS.map((s) => (
+              <div className="stat-block" key={s.label}>
+                <div className="stat-num">{s.value}</div>
+                <div className="stat-label">{s.label}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Impact */}
-      <section className="impact-section">
-        <div className="section-container">
+      {/* ── IMPACT ── */}
+      <section className="impact-section section" aria-labelledby="impact-heading">
+        <div className="container">
           <div className="impact-layout">
-            <div className="impact-content">
-              <span className="section-label">Impact</span>
-              <h2 className="section-title">Safety meets<br />sustainability</h2>
+
+            <div className="impact-info">
+              <span className="label">Impact</span>
+              <h2 id="impact-heading" className="section-title display">
+                Safety meets
+                <br />
+                sustainability
+              </h2>
               <div className="impact-list">
-                <div className="impact-item">
-                  <div className="impact-icon">↓</div>
-                  <div>
-                    <h4>Reduce Accidents</h4>
-                    <p>Eliminate screen distraction for millions of riders</p>
+                {IMPACT.map((item) => (
+                  <div className="impact-item" key={item.title}>
+                    <div className="impact-icon" aria-hidden="true">{item.icon}</div>
+                    <div>
+                      <h4>{item.title}</h4>
+                      <p>{item.desc}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="impact-item">
-                  <div className="impact-icon">↑</div>
-                  <div>
-                    <h4>Optimize Routes</h4>
-                    <p>AI-driven navigation reduces fuel consumption</p>
-                  </div>
-                </div>
-                <div className="impact-item">
-                  <div className="impact-icon">○</div>
-                  <div>
-                    <h4>Enable Innovation</h4>
-                    <p>Data platform for fleet optimization & insurance</p>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
-            <div className="impact-visual">
+
+            {/* Carbon meter */}
+            <div className="carbon-wrap" aria-label="28% carbon reduction indicator">
               <div className="carbon-meter">
-                <div className="meter-circle">
-                  <svg viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="2"/>
-                    <circle cx="50" cy="50" r="45" fill="none" stroke="url(#gradient)" strokeWidth="2" 
-                      strokeDasharray="283" strokeDashoffset="70" transform="rotate(-90 50 50)"/>
-                    <defs>
-                      <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#00ff88" />
-                        <stop offset="100%" stopColor="#0088ff" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
-                  <div className="meter-label">
-                    <div className="meter-value">-28%</div>
-                    <div className="meter-text">Carbon</div>
-                  </div>
+                <svg viewBox="0 0 200 200" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="meterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%"   stopColor="#00ff88" />
+                      <stop offset="100%" stopColor="#0077ff" />
+                    </linearGradient>
+                  </defs>
+                  {/* Track */}
+                  <circle
+                    cx="100" cy="100" r="88"
+                    fill="none"
+                    stroke="rgba(255,255,255,0.06)"
+                    strokeWidth="3"
+                  />
+                  {/* Progress — strokeDasharray = 2πr ≈ 553 */}
+                  <circle
+                    cx="100" cy="100" r="88"
+                    fill="none"
+                    stroke="url(#meterGrad)"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeDasharray="553"
+                    strokeDashoffset="138"
+                    transform="rotate(-90 100 100)"
+                  />
+                </svg>
+                <div className="carbon-label">
+                  <div className="carbon-value">−28%</div>
+                  <div className="carbon-desc">Carbon reduction</div>
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="cta-section" id="contact">
-        <div className="section-container">
-          <div className="cta-content">
-            <h2 className="cta-title">Ready to transform<br />your ride?</h2>
-            <p className="cta-subtitle">Join our beta program and be among the first to experience intelligent mobility.</p>
-            <form className="cta-form">
-              <input type="email" placeholder="Enter your email" className="email-input" />
-              <button type="submit" className="submit-btn">Get Early Access</button>
-            </form>
-            <p className="cta-note">For fleet partnerships & enterprise inquiries: <a href="mailto:hello@gripz.ai">hello@gripz.ai</a></p>
+      {/* ── CTA ── */}
+      <section className="cta-section" id="contact" aria-labelledby="cta-heading">
+        <div className="container">
+          <div className="cta-inner">
+            <h2 id="cta-heading" className="section-title display">
+              Ready to transform
+              <br />
+              your ride?
+            </h2>
+            <p className="cta-sub">
+              Join our beta programme and be among the first to experience intelligent mobility.
+            </p>
+
+            {submitted ? (
+              <div className="cta-success" role="alert">
+                🎉 You're on the list! We'll be in touch soon.
+              </div>
+            ) : (
+              <form className="cta-form" onSubmit={handleSubmit} noValidate>
+                <input
+                  type="email"
+                  className="cta-input"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  aria-label="Email address"
+                />
+                <button type="submit" className="btn btn-primary">
+                  Get Early Access
+                </button>
+              </form>
+            )}
+
+            <p className="cta-note">
+              Fleet partnerships &amp; enterprise:{' '}
+              <a href="mailto:hello@gripz.ai">hello@gripz.ai</a>
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="footer">
-        <div className="footer-content">
-          <div className="footer-left">
-            <div className="footer-logo">
-              <span className="logo-text">GRIPZ</span>
-              <span className="logo-ai">AI</span>
-            </div>
+      {/* ── FOOTER ── */}
+      <footer className="footer" aria-label="Site footer">
+        <div className="footer-main">
+          <div className="footer-brand">
+            <a href="/" style={{ display: 'inline-block', marginBottom: '0.875rem' }}>
+              <img src="/logo.png" alt="Gripz AI" className="nav-logo-img" />
+            </a>
             <p className="footer-tagline">Intelligence at your fingertips</p>
           </div>
-          <div className="footer-right">
-            <div className="footer-section">
-              <h4>Product</h4>
-              <a href="#product">Features</a>
-              <a href="#technology">Technology</a>
-              <a href="#">Pricing</a>
-            </div>
-            <div className="footer-section">
-              <h4>Company</h4>
-              <a href="#">About</a>
-              <a href="#">Blog</a>
-              <a href="#">Careers</a>
-            </div>
-            <div className="footer-section">
-              <h4>Connect</h4>
-              <a href="#">LinkedIn</a>
-              <a href="#">Twitter</a>
-              <a href="mailto:hello@gripz.ai">Contact</a>
-            </div>
+
+          <div className="footer-col">
+            <h4>Product</h4>
+            <a href="#product">Features</a>
+            <a href="#technology">Technology</a>
+            <a href="#">Pricing</a>
+          </div>
+
+          <div className="footer-col">
+            <h4>Company</h4>
+            <a href="#">About</a>
+            <a href="#">Blog</a>
+            <a href="#">Careers</a>
+          </div>
+
+          <div className="footer-col">
+            <h4>Connect</h4>
+            <a href="#" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a href="#" target="_blank" rel="noreferrer">Twitter</a>
+            <a href="mailto:hello@gripz.ai">Contact</a>
           </div>
         </div>
+
         <div className="footer-bottom">
-          <p>© 2024 Gripz AI. All rights reserved.</p>
-          <div className="footer-links">
+          <p className="footer-copy">© 2025 Gripz AI. All rights reserved.</p>
+          <div className="footer-legal">
             <a href="#">Privacy</a>
             <a href="#">Terms</a>
           </div>
         </div>
       </footer>
+
     </div>
   );
 }
