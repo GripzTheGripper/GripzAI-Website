@@ -8,14 +8,18 @@
   --bg-2:         #0f0f0f;
   --bg-3:         #161616;
   --border:       rgba(255, 255, 255, 0.07);
-  --border-hover: rgba(0, 255, 136, 0.3);
+
+  /* CHANGE 4 — muted teal + soft indigo
+     Cognitive load: cool low-saturation hues lower visual
+     stress while staying highly memorable on dark backgrounds */
+  --border-hover: rgba(79, 209, 197, 0.3);
   --text:         #f0f0f0;
   --text-2:       #9a9a9a;
   --text-3:       #444;
-  --green:        #00ff88;
-  --blue:         #0077ff;
-  --gradient:     linear-gradient(135deg, #00ff88 0%, #0077ff 100%);
-  --gradient-sub: linear-gradient(135deg, rgba(0,255,136,0.08) 0%, rgba(0,119,255,0.08) 100%);
+  --green:        #4fd1c5;
+  --blue:         #818cf8;
+  --gradient:     linear-gradient(135deg, #4fd1c5 0%, #818cf8 100%);
+  --gradient-sub: linear-gradient(135deg, rgba(79,209,197,0.08) 0%, rgba(129,140,248,0.08) 100%);
 
   --font-display: 'Plus Jakarta Sans', sans-serif;
   --font-body:    'Inter', sans-serif;
@@ -32,9 +36,7 @@
    RESET & BASE
    ============================================================ */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
 html { scroll-behavior: smooth; font-size: 16px; }
-
 body {
   font-family: var(--font-body);
   background: var(--bg);
@@ -43,7 +45,6 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
-
 a { color: inherit; text-decoration: none; }
 button { font-family: var(--font-body); cursor: pointer; border: none; background: none; }
 img { display: block; max-width: 100%; }
@@ -51,12 +52,7 @@ img { display: block; max-width: 100%; }
 /* ============================================================
    LAYOUT UTILITIES
    ============================================================ */
-.container {
-  max-width: var(--content-max);
-  margin: 0 auto;
-  padding: var(--content-pad);
-}
-
+.container { max-width: var(--content-max); margin: 0 auto; padding: var(--content-pad); }
 .section { padding: var(--section-pad); }
 
 .label {
@@ -76,7 +72,7 @@ img { display: block; max-width: 100%; }
 }
 
 /* ============================================================
-   NAVIGATION — macOS liquid glass, centered pill
+   NAVIGATION
    ============================================================ */
 .nav {
   position: fixed;
@@ -99,18 +95,9 @@ img { display: block; max-width: 100%; }
   gap: 1rem;
 }
 
-/* Left: logo */
-.nav-logo {
-  justify-self: start;
-}
+.nav-logo { justify-self: start; }
+.nav-logo-img { height: 30px; width: auto; display: block; }
 
-.nav-logo-img {
-  height: 30px;
-  width: auto;
-  display: block;
-}
-
-/* Center: floating pill */
 .nav-pill {
   display: flex;
   align-items: center;
@@ -145,7 +132,6 @@ img { display: block; max-width: 100%; }
   background: rgba(255, 255, 255, 0.06);
 }
 
-/* Right: CTA */
 .nav-right-cta {
   justify-self: end;
   font-size: 0.85rem !important;
@@ -174,7 +160,7 @@ img { display: block; max-width: 100%; }
   transform: translateX(-50%);
   width: 900px;
   height: 900px;
-  background: radial-gradient(circle, rgba(0, 255, 136, 0.07) 0%, transparent 65%);
+  background: radial-gradient(circle, rgba(79, 209, 197, 0.07) 0%, transparent 65%);
   pointer-events: none;
   animation: glowPulse 9s ease-in-out infinite;
 }
@@ -184,15 +170,15 @@ img { display: block; max-width: 100%; }
   50%       { opacity: 1;   transform: translateX(-50%) scale(1.12); }
 }
 
-/* YC Badge */
+/* Backed-by badge */
 .yc-badge {
   position: relative;
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
   padding: 0.5rem 1.1rem;
-  background: rgba(255, 102, 0, 0.08);
-  border: 1px solid rgba(255, 102, 0, 0.25);
+  background: rgba(79, 209, 197, 0.06);
+  border: 1px solid rgba(79, 209, 197, 0.2);
   border-radius: 100px;
   margin-bottom: 1.5rem;
   overflow: hidden;
@@ -201,11 +187,8 @@ img { display: block; max-width: 100%; }
   transition: border-color 0.3s ease;
 }
 
-.yc-badge:hover {
-  border-color: rgba(255, 102, 0, 0.5);
-}
+.yc-badge:hover { border-color: rgba(79, 209, 197, 0.45); }
 
-/* Shine sweep */
 .yc-shine {
   position: absolute;
   top: 0; left: -75%;
@@ -226,8 +209,8 @@ img { display: block; max-width: 100%; }
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 0.85rem;
-  color: #ff6600;
-  background: rgba(255,102,0,0.15);
+  color: var(--green);
+  background: rgba(79, 209, 197, 0.12);
   border-radius: 4px;
   width: 20px;
   height: 20px;
@@ -240,11 +223,10 @@ img { display: block; max-width: 100%; }
 .yc-text {
   font-size: 0.8rem;
   font-weight: 500;
-  color: rgba(255, 160, 80, 0.9);
+  color: rgba(180, 230, 225, 0.9);
   letter-spacing: 0.01em;
 }
 
-/* DeepTech badge */
 .hero-badge {
   display: inline-flex;
   align-items: center;
@@ -298,7 +280,6 @@ img { display: block; max-width: 100%; }
   animation: fadeUp 0.7s var(--ease-expo) 0.55s both;
 }
 
-/* Scroll indicator — hidden on small screens */
 .hero-scroll {
   position: absolute;
   bottom: 2.5rem;
@@ -350,7 +331,7 @@ img { display: block; max-width: 100%; }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(0, 255, 136, 0.25);
+  box-shadow: 0 12px 40px rgba(79, 209, 197, 0.2);
 }
 
 .btn-ghost {
@@ -365,7 +346,8 @@ img { display: block; max-width: 100%; }
 }
 
 /* ============================================================
-   PARTNER LOGO TICKER
+   PARTNER LOGO TICKER — CHANGE 1
+   Logos now display in real colour, larger, higher opacity
    ============================================================ */
 .ticker-section {
   padding: 3rem 0;
@@ -383,10 +365,7 @@ img { display: block; max-width: 100%; }
   color: var(--text-3);
 }
 
-.ticker-track {
-  overflow: hidden;
-  position: relative;
-}
+.ticker-track { overflow: hidden; position: relative; }
 
 .ticker-inner {
   display: flex;
@@ -395,9 +374,7 @@ img { display: block; max-width: 100%; }
   animation: tickerScroll 18s linear infinite;
 }
 
-.ticker-inner:hover {
-  animation-play-state: paused;
-}
+.ticker-inner:hover { animation-play-state: paused; }
 
 @keyframes tickerScroll {
   0%   { transform: translateX(0); }
@@ -409,42 +386,31 @@ img { display: block; max-width: 100%; }
   align-items: center;
   justify-content: center;
   min-width: 140px;
-  height: 48px;
+  height: 56px;   /* was 48px */
 }
 
 .ticker-logo {
-  height: 36px;
+  height: 44px;              /* was 36px — bigger */
   width: auto;
   object-fit: contain;
-  filter: brightness(0) invert(1);
-  opacity: 0.4;
+  filter: none;              /* was brightness(0) invert(1) — now real colours */
+  opacity: 0.65;             /* was 0.4 — more visible */
   transition: opacity 0.3s ease;
 }
 
-.ticker-logo:hover {
-  opacity: 0.8;
-}
+.ticker-logo:hover { opacity: 1; }
 
-/* Fade edges */
 .ticker-fade-left,
 .ticker-fade-right {
   position: absolute;
-  top: 0;
-  bottom: 0;
+  top: 0; bottom: 0;
   width: 120px;
   z-index: 2;
   pointer-events: none;
 }
 
-.ticker-fade-left {
-  left: 0;
-  background: linear-gradient(to right, var(--bg-2), transparent);
-}
-
-.ticker-fade-right {
-  right: 0;
-  background: linear-gradient(to left, var(--bg-2), transparent);
-}
+.ticker-fade-left  { left:  0; background: linear-gradient(to right, var(--bg-2), transparent); }
+.ticker-fade-right { right: 0; background: linear-gradient(to left,  var(--bg-2), transparent); }
 
 /* ============================================================
    SECTION HEADERS
@@ -452,10 +418,7 @@ img { display: block; max-width: 100%; }
 .section-header { margin-bottom: 4rem; }
 
 .section-header .label,
-.section-header > .label {
-  display: block;
-  margin-bottom: 1rem;
-}
+.section-header > .label { display: block; margin-bottom: 1rem; }
 
 .section-title {
   font-family: var(--font-display);
@@ -506,11 +469,7 @@ img { display: block; max-width: 100%; }
   letter-spacing: -0.02em;
 }
 
-.problem-card p {
-  color: var(--text-2);
-  font-size: 0.95rem;
-  line-height: 1.75;
-}
+.problem-card p { color: var(--text-2); font-size: 0.95rem; line-height: 1.75; }
 
 /* ============================================================
    PRODUCT SECTION
@@ -529,7 +488,7 @@ img { display: block; max-width: 100%; }
 .product-image-bg {
   position: absolute;
   inset: -20%;
-  background: radial-gradient(circle, rgba(0,255,136,0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(79,209,197,0.08) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -541,7 +500,7 @@ img { display: block; max-width: 100%; }
   position: relative;
   z-index: 1;
   transition: transform 0.5s var(--ease-expo);
-  filter: drop-shadow(0 20px 60px rgba(0, 255, 136, 0.12));
+  filter: drop-shadow(0 20px 60px rgba(79, 209, 197, 0.1));
 }
 
 .product-img:hover { transform: scale(1.02) rotate(-1deg); }
@@ -549,12 +508,7 @@ img { display: block; max-width: 100%; }
 .product-info .label { display: block; margin-bottom: 1rem; }
 .product-info .section-title { margin-bottom: 1.25rem; }
 
-.product-desc {
-  color: var(--text-2);
-  font-size: 1.05rem;
-  line-height: 1.8;
-  margin-bottom: 2.5rem;
-}
+.product-desc { color: var(--text-2); font-size: 1.05rem; line-height: 1.8; margin-bottom: 2.5rem; }
 
 .specs { display: flex; flex-direction: column; gap: 1.25rem; }
 
@@ -625,9 +579,7 @@ img { display: block; max-width: 100%; }
 }
 
 .feature-card:hover .feature-icon-wrap,
-.feature-card.active .feature-icon-wrap {
-  border-color: var(--border-hover);
-}
+.feature-card.active .feature-icon-wrap { border-color: var(--border-hover); }
 
 .feature-card h3 {
   font-family: var(--font-display);
@@ -637,14 +589,12 @@ img { display: block; max-width: 100%; }
   letter-spacing: -0.02em;
 }
 
-.feature-card p {
-  color: var(--text-2);
-  font-size: 0.875rem;
-  line-height: 1.75;
-}
+.feature-card p { color: var(--text-2); font-size: 0.875rem; line-height: 1.75; }
 
 /* ============================================================
-   STATS SECTION
+   STATS SECTION — CHANGE 2
+   Removed harsh border-gap box grid.
+   Now: clean columns with floating vertical dividers.
    ============================================================ */
 .stats-section {
   border-top: 1px solid var(--border);
@@ -655,13 +605,24 @@ img { display: block; max-width: 100%; }
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   text-align: center;
-  gap: 1px;
-  background: var(--border);
+  position: relative;
 }
 
 .stat-block {
-  background: var(--bg);
-  padding: 3.5rem 2rem;
+  background: transparent;
+  padding: 4rem 2rem;
+  position: relative;
+}
+
+/* Slim centred vertical dividers — no full-height box wall */
+.stat-block:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 20%;
+  right: 0;
+  width: 1px;
+  height: 60%;
+  background: var(--border);
 }
 
 .stat-num {
@@ -677,7 +638,13 @@ img { display: block; max-width: 100%; }
   background-clip: text;
 }
 
-.stat-label { font-size: 0.9rem; color: var(--text-2); }
+.stat-label {
+  font-size: 0.9rem;
+  color: var(--text-2);
+  max-width: 220px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
 
 /* ============================================================
    IMPACT SECTION
@@ -733,6 +700,7 @@ img { display: block; max-width: 100%; }
 
 .impact-item p { font-size: 0.9rem; color: var(--text-2); }
 
+/* Carbon meter — CHANGE 3: animation is driven by JS IntersectionObserver */
 .carbon-wrap { display: flex; justify-content: center; align-items: center; }
 
 .carbon-meter {
@@ -768,7 +736,7 @@ img { display: block; max-width: 100%; }
 .carbon-desc { font-size: 0.85rem; color: var(--text-2); margin-top: 0.4rem; }
 
 /* ============================================================
-   TESTIMONIALS — auto-scrolling row
+   TESTIMONIALS
    ============================================================ */
 .testimonials-section {
   padding: var(--section-pad);
@@ -823,12 +791,7 @@ img { display: block; max-width: 100%; }
   transform: translateY(-4px);
 }
 
-.testi-stars {
-  color: #f5a623;
-  font-size: 0.85rem;
-  letter-spacing: 0.1em;
-  margin-bottom: 1rem;
-}
+.testi-stars { color: #f5a623; font-size: 0.85rem; letter-spacing: 0.1em; margin-bottom: 1rem; }
 
 .testi-quote {
   font-size: 0.95rem;
@@ -838,11 +801,7 @@ img { display: block; max-width: 100%; }
   font-style: italic;
 }
 
-.testi-author {
-  display: flex;
-  align-items: center;
-  gap: 0.875rem;
-}
+.testi-author { display: flex; align-items: center; gap: 0.875rem; }
 
 .testi-avatar {
   width: 38px;
@@ -869,22 +828,11 @@ img { display: block; max-width: 100%; }
   border-top: 1px solid var(--border);
 }
 
-.cta-inner {
-  max-width: 620px;
-  margin: 0 auto;
-  text-align: center;
-}
-
+.cta-inner { max-width: 620px; margin: 0 auto; text-align: center; }
 .cta-inner .section-title { margin-bottom: 1.25rem; }
 
-.cta-sub {
-  color: var(--text-2);
-  font-size: 1.05rem;
-  line-height: 1.75;
-  margin-bottom: 2.5rem;
-}
+.cta-sub { color: var(--text-2); font-size: 1.05rem; line-height: 1.75; margin-bottom: 2.5rem; }
 
-/* Beta form */
 .beta-form {
   display: flex;
   flex-direction: column;
@@ -893,19 +841,9 @@ img { display: block; max-width: 100%; }
   margin-bottom: 1.5rem;
 }
 
-.beta-form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-
+.beta-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 .beta-form-full { grid-column: 1 / -1; }
-
-.beta-form-field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
+.beta-form-field { display: flex; flex-direction: column; gap: 0.4rem; }
 
 .beta-form-field label {
   font-size: 0.8rem;
@@ -954,7 +892,7 @@ img { display: block; max-width: 100%; }
 .cta-note a:hover { opacity: 0.7; }
 
 /* ============================================================
-   GIANT WORDMARK (like cubic.dev)
+   GIANT WORDMARK
    ============================================================ */
 .wordmark-section {
   padding: 4rem 0 0;
@@ -967,7 +905,6 @@ img { display: block; max-width: 100%; }
 .wordmark-text {
   font-family: var(--font-display);
   font-weight: 800;
-  /* Clamp: never smaller than 10vw, ideally 18vw, never bigger than 260px tall */
   font-size: clamp(10vw, 18vw, 22rem);
   letter-spacing: -0.04em;
   line-height: 0.85;
@@ -1019,16 +956,12 @@ img { display: block; max-width: 100%; }
 }
 
 .modal-close:hover { color: var(--text); transform: rotate(90deg); }
-
 .modal-box iframe { width: 100%; height: 100%; border: none; }
 
 /* ============================================================
    FOOTER
    ============================================================ */
-.footer {
-  background: var(--bg-2);
-  border-top: 1px solid var(--border);
-}
+.footer { background: var(--bg-2); border-top: 1px solid var(--border); }
 
 .footer-main {
   max-width: var(--content-max);
@@ -1051,14 +984,7 @@ img { display: block; max-width: 100%; }
   margin-bottom: 1.25rem;
 }
 
-.footer-col a {
-  display: block;
-  font-size: 0.9rem;
-  color: var(--text-2);
-  margin-bottom: 0.75rem;
-  transition: color 0.2s ease;
-}
-
+.footer-col a { display: block; font-size: 0.9rem; color: var(--text-2); margin-bottom: 0.75rem; transition: color 0.2s ease; }
 .footer-col a:hover { color: var(--text); }
 
 .footer-bottom {
@@ -1077,7 +1003,7 @@ img { display: block; max-width: 100%; }
 .footer-legal a:hover { color: var(--text-2); }
 
 /* ============================================================
-   SHAKE HOVER — all cards
+   SHAKE HOVER
    ============================================================ */
 @keyframes shake {
   0%   { transform: translateY(-5px) rotate(0deg); }
@@ -1118,48 +1044,34 @@ img { display: block; max-width: 100%; }
    RESPONSIVE
    ============================================================ */
 @media (max-width: 1024px) {
-  .product-layout,
-  .impact-layout {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-  }
-
+  .product-layout, .impact-layout { grid-template-columns: 1fr; gap: 3rem; }
   .features-grid { grid-template-columns: repeat(2, 1fr); }
-
-  .footer-main {
-    grid-template-columns: 1fr 1fr;
-    gap: 2.5rem;
-  }
+  .footer-main { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
 }
 
 @media (max-width: 768px) {
-  :root {
-    --section-pad: 5rem 0;
-    --content-pad: 0 1.5rem;
-  }
+  :root { --section-pad: 5rem 0; --content-pad: 0 1.5rem; }
 
   .hero { padding: 7rem 1.5rem 4rem; }
-
-  /* Hide scroll line on mobile — it looks bad */
   .hero-scroll { display: none; }
 
   .problem-grid { grid-template-columns: 1fr; }
-  .stats-row    { grid-template-columns: 1fr; gap: 0; }
   .features-grid { grid-template-columns: 1fr; }
   .beta-form-row { grid-template-columns: 1fr; }
 
-  .footer-main {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    padding: 3rem 1.5rem 2rem;
+  /* CHANGE 2 mobile — stats stack vertically with horizontal divider */
+  .stats-row { grid-template-columns: 1fr; }
+  .stat-block:not(:last-child)::after {
+    top: auto;
+    bottom: 0;
+    right: auto;
+    left: 10%;
+    width: 80%;
+    height: 1px;
   }
 
-  .footer-bottom {
-    flex-direction: column;
-    gap: 1rem;
-    text-align: center;
-    padding: 1.5rem;
-  }
+  .footer-main { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.5rem 2rem; }
+  .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; padding: 1.5rem; }
 
   .modal-overlay { padding: 1rem; }
   .modal-close { top: -2.5rem; font-size: 1.4rem; }
@@ -1169,22 +1081,10 @@ img { display: block; max-width: 100%; }
 }
 
 @media (max-width: 640px) {
-  /* Nav: hide right CTA button, keep pill + logo */
   .nav-right-cta { display: none; }
-
-  .nav-inner {
-    grid-template-columns: auto 1fr;
-    gap: 0.75rem;
-  }
-
-  .nav-pill {
-    justify-self: end;
-  }
-
-  .nav-pill a {
-    padding: 0.4rem 0.65rem;
-    font-size: 0.8rem;
-  }
+  .nav-inner { grid-template-columns: auto 1fr; gap: 0.75rem; }
+  .nav-pill { justify-self: end; }
+  .nav-pill a { padding: 0.4rem 0.65rem; font-size: 0.8rem; }
 
   .hero-actions { flex-direction: column; width: 100%; }
   .btn { width: 100%; justify-content: center; }
