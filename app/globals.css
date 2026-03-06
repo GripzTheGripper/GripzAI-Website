@@ -1,1077 +1,422 @@
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap');
+'use client';
+
+import { useState, useEffect } from 'react';
+import './globals.css';
 
 /* ============================================================
-   DESIGN TOKENS
+   DATA
    ============================================================ */
-:root {
-  /* Colors */
-  --bg:           #080808;
-  --bg-2:         #0f0f0f;
-  --bg-3:         #161616;
-  --border:       rgba(255, 255, 255, 0.07);
-  --border-hover: rgba(0, 255, 136, 0.3);
-  --text:         #f0f0f0;
-  --text-2:       #888;
-  --text-3:       #444;
-  --green:        #00ff88;
-  --blue:         #0077ff;
-  --gradient:     linear-gradient(135deg, #00ff88 0%, #0077ff 100%);
-  --gradient-sub: linear-gradient(135deg, rgba(0,255,136,0.08) 0%, rgba(0,119,255,0.08) 100%);
+const FEATURES = [
+  {
+    icon: '⟳',
+    title: 'Haptic Navigation',
+    description:
+      'Eye-free turn-by-turn guidance through intuitive vibration patterns. Navigate safely without looking at your screen.',
+  },
+  {
+    icon: '⚡',
+    title: 'Accident Detection',
+    description:
+      'Advanced gyroscope and IMU sensors detect abnormal tilts and crashes, triggering instant SOS alerts.',
+  },
+  {
+    icon: '◉',
+    title: 'Fleet Intelligence',
+    description:
+      'Real-time telematics, behaviour analytics, and carbon tracking for modern mobility platforms.',
+  },
+  {
+    icon: '⊙',
+    title: 'Group Sync',
+    description:
+      'Leader-follower route coordination for seamless group rides and delivery coordination.',
+  },
+];
 
-  /* Typography */
-  --font-display: 'Syne', sans-serif;
-  --font-body:    'DM Sans', sans-serif;
-  --font-mono:    'JetBrains Mono', monospace;
+const STATS = [
+  { value: '6–10 hrs', label: 'Daily rider screen exposure' },
+  { value: '100K+',   label: 'Gig riders in India' },
+  { value: '40%',     label: 'Accident reduction potential' },
+];
 
-  /* Easing */
-  --ease-expo:    cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-circ:    cubic-bezier(0.85, 0, 0.15, 1);
+const SPECS = [
+  { name: 'ESP-based MCU',  detail: 'Bluetooth & Wi-Fi connectivity' },
+  { name: '6-axis IMU',     detail: 'Accident & tilt detection' },
+  { name: 'Haptic Motors',  detail: 'Directional vibration feedback' },
+];
 
-  /* Spacing */
-  --section-pad:  8rem 0;
-  --content-max:  1320px;
-  --content-pad:  0 2.5rem;
-}
+const IMPACT = [
+  { icon: '↓', title: 'Reduce Accidents',   desc: 'Eliminate screen distraction for millions of riders' },
+  { icon: '↑', title: 'Optimise Routes',    desc: 'AI-driven navigation reduces fuel consumption' },
+  { icon: '○', title: 'Enable Innovation',  desc: 'Data platform for fleet optimisation & insurance' },
+];
 
 /* ============================================================
-   RESET & BASE
+   COMPONENT
    ============================================================ */
-*, *::before, *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-  font-size: 16px;
-}
-
-body {
-  font-family: var(--font-body);
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-button {
-  font-family: var(--font-body);
-  cursor: pointer;
-  border: none;
-  background: none;
-}
-
-img {
-  display: block;
-  max-width: 100%;
-}
-
-/* ============================================================
-   LAYOUT UTILITIES
-   ============================================================ */
-.container {
-  max-width: var(--content-max);
-  margin: 0 auto;
-  padding: var(--content-pad);
-}
-
-.section {
-  padding: var(--section-pad);
-}
-
-/* ============================================================
-   TYPOGRAPHY UTILITIES
-   ============================================================ */
-.label {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: var(--green);
-  font-weight: 500;
-}
-
-.display {
-  font-family: var(--font-display);
-  font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-}
-
-.gradient-text {
-  background: var(--gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ============================================================
-   NAVIGATION
-   ============================================================ */
-.nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  padding: 1.75rem 0;
-  transition: padding 0.4s var(--ease-expo), background 0.4s var(--ease-expo);
-}
-
-.nav.scrolled {
-  padding: 1rem 0;
-  background: rgba(8, 8, 8, 0.85);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1px solid var(--border);
-}
-
-.nav-inner {
-  max-width: var(--content-max);
-  margin: 0 auto;
-  padding: var(--content-pad);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.nav-logo {
-  display: flex;
-  align-items: baseline;
-  gap: 0.3rem;
-}
-
-.nav-logo-word {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 1.4rem;
-  letter-spacing: -0.02em;
-  color: var(--text);
-}
-
-.nav-logo-tag {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--green);
-  font-weight: 500;
-  letter-spacing: 0.05em;
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 2.5rem;
-  list-style: none;
-}
-
-.nav-links a {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--text-2);
-  transition: color 0.25s ease;
-  letter-spacing: -0.01em;
-}
-
-.nav-links a:hover {
-  color: var(--text);
-}
-
-.nav-cta {
-  padding: 0.55rem 1.25rem;
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  color: var(--text-2) !important;
-  transition: border-color 0.25s ease, color 0.25s ease !important;
-}
-
-.nav-cta:hover {
-  border-color: var(--green) !important;
-  color: var(--green) !important;
-}
-
-/* ============================================================
-   HERO
-   ============================================================ */
-.hero {
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 10rem 2.5rem 6rem;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Ambient glow */
-.hero-glow {
-  position: absolute;
-  top: -10%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 900px;
-  height: 900px;
-  background: radial-gradient(circle, rgba(0, 255, 136, 0.07) 0%, transparent 65%);
-  pointer-events: none;
-  animation: glowPulse 9s ease-in-out infinite;
-}
-
-@keyframes glowPulse {
-  0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
-  50%       { opacity: 1;   transform: translateX(-50%) scale(1.12); }
-}
-
-/* Grain texture */
-.hero::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
-  pointer-events: none;
-  opacity: 0.4;
-}
-
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.45rem 1rem;
-  background: var(--bg-3);
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  margin-bottom: 2.5rem;
-  animation: fadeUp 0.7s var(--ease-expo) 0.1s both;
-}
-
-.badge-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--green);
-  animation: blink 2.5s ease-in-out infinite;
-}
-
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.2; }
-}
-
-.hero-title {
-  font-size: clamp(3.5rem, 8.5vw, 7rem);
-  font-family: var(--font-display);
-  font-weight: 800;
-  line-height: 1.02;
-  letter-spacing: -0.04em;
-  margin-bottom: 1.5rem;
-  animation: fadeUp 0.7s var(--ease-expo) 0.25s both;
-}
-
-.hero-sub {
-  font-size: clamp(1rem, 1.8vw, 1.2rem);
-  color: var(--text-2);
-  max-width: 580px;
-  line-height: 1.75;
-  margin-bottom: 3rem;
-  font-weight: 300;
-  animation: fadeUp 0.7s var(--ease-expo) 0.4s both;
-}
-
-.hero-actions {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  justify-content: center;
-  animation: fadeUp 0.7s var(--ease-expo) 0.55s both;
-}
-
-.hero-scroll {
-  position: absolute;
-  bottom: 2.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 1px;
-  height: 56px;
-  background: var(--border);
-  overflow: hidden;
-}
-
-.hero-scroll::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 40%;
-  background: var(--gradient);
-  animation: scrollDown 2s var(--ease-expo) infinite;
-}
-
-@keyframes scrollDown {
-  0%   { transform: translateY(-100%); }
-  100% { transform: translateY(300%); }
-}
-
-/* ============================================================
-   BUTTONS
-   ============================================================ */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.85rem 1.9rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-  border-radius: 0.5rem;
-  transition: all 0.3s var(--ease-expo);
-  letter-spacing: -0.01em;
-  white-space: nowrap;
-}
-
-.btn-primary {
-  background: var(--gradient);
-  color: var(--bg);
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(0, 255, 136, 0.25);
-}
-
-.btn-ghost {
-  background: transparent;
-  color: var(--text);
-  border: 1px solid var(--border);
-}
-
-.btn-ghost:hover {
-  border-color: rgba(255,255,255,0.2);
-  transform: translateY(-2px);
-}
-
-/* ============================================================
-   SECTION DIVIDER
-   ============================================================ */
-.divider {
-  width: 100%;
-  height: 1px;
-  background: var(--border);
-}
-
-/* ============================================================
-   PROBLEM SECTION
-   ============================================================ */
-.problem-section {
-  padding: var(--section-pad);
-  background: var(--bg-2);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-
-.section-header {
-  margin-bottom: 4rem;
-}
-
-.section-header .label {
-  display: block;
-  margin-bottom: 1rem;
-}
-
-.section-title {
-  font-size: clamp(2.25rem, 4.5vw, 3.75rem);
-  font-family: var(--font-display);
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-}
-
-.problem-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
-
-.problem-card {
-  padding: 2.5rem;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 1.25rem;
-  transition: border-color 0.35s ease, transform 0.35s var(--ease-expo);
-}
-
-.problem-card:hover {
-  border-color: var(--border-hover);
-  transform: translateY(-5px);
-}
-
-.problem-num {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--green);
-  letter-spacing: 0.1em;
-  margin-bottom: 1.75rem;
-  display: block;
-}
-
-.problem-card h3 {
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  font-weight: 700;
-  margin-bottom: 0.875rem;
-  letter-spacing: -0.02em;
-}
-
-.problem-card p {
-  color: var(--text-2);
-  font-size: 0.95rem;
-  line-height: 1.75;
-  font-weight: 300;
-}
-
-/* ============================================================
-   PRODUCT SECTION
-   ============================================================ */
-.product-section {
-  padding: var(--section-pad);
-}
-
-.product-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5rem;
-  align-items: center;
-}
-
-.product-image-wrap {
-  position: relative;
-}
-
-.product-image-bg {
-  position: absolute;
-  inset: -20%;
-  background: radial-gradient(circle, rgba(0,255,136,0.08) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-.product-img {
-  width: 100%;
-  max-width: 520px;
-  border-radius: 1.5rem;
-  position: relative;
-  z-index: 1;
-  transition: transform 0.5s var(--ease-expo);
-  filter: drop-shadow(0 20px 60px rgba(0, 255, 136, 0.12));
-}
-
-.product-img:hover {
-  transform: scale(1.02) rotate(-1deg);
-}
-
-.product-info .label {
-  display: block;
-  margin-bottom: 1rem;
-}
-
-.product-info .section-title {
-  margin-bottom: 1.25rem;
-}
-
-.product-desc {
-  color: var(--text-2);
-  font-size: 1.05rem;
-  line-height: 1.8;
-  margin-bottom: 2.5rem;
-  font-weight: 300;
-}
-
-.specs {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
-
-.spec-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 1.25rem;
-  padding: 1.25rem;
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-radius: 0.875rem;
-  transition: border-color 0.25s ease;
-}
-
-.spec-row:hover {
-  border-color: var(--border-hover);
-}
-
-.spec-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--green);
-  margin-top: 0.35rem;
-  flex-shrink: 0;
-}
-
-.spec-name {
-  font-weight: 600;
-  font-size: 0.95rem;
-  margin-bottom: 0.2rem;
-  font-family: var(--font-display);
-}
-
-.spec-detail {
-  font-size: 0.85rem;
-  color: var(--text-2);
-}
-
-/* ============================================================
-   FEATURES SECTION
-   ============================================================ */
-.features-section {
-  padding: var(--section-pad);
-  background: var(--bg-2);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-
-.features-section .section-header {
-  text-align: center;
-}
-
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.25rem;
-}
-
-.feature-card {
-  padding: 2.25rem;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 1.25rem;
-  cursor: default;
-  transition: border-color 0.35s ease, transform 0.35s var(--ease-expo), background 0.35s ease;
-}
-
-.feature-card:hover,
-.feature-card.active {
-  border-color: var(--border-hover);
-  background: var(--gradient-sub);
-  transform: translateY(-5px);
-}
-
-.feature-icon-wrap {
-  width: 48px;
-  height: 48px;
-  border: 1px solid var(--border);
-  border-radius: 0.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  margin-bottom: 1.5rem;
-  transition: border-color 0.35s ease;
-}
-
-.feature-card:hover .feature-icon-wrap,
-.feature-card.active .feature-icon-wrap {
-  border-color: var(--border-hover);
-}
-
-.feature-card h3 {
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  font-weight: 700;
-  margin-bottom: 0.6rem;
-  letter-spacing: -0.02em;
-}
-
-.feature-card p {
-  color: var(--text-2);
-  font-size: 0.875rem;
-  line-height: 1.75;
-  font-weight: 300;
-}
-
-/* ============================================================
-   STATS SECTION
-   ============================================================ */
-.stats-section {
-  padding: 5rem 0;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-
-.stats-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  text-align: center;
-  gap: 1px;
-  background: var(--border);
-}
-
-.stat-block {
-  background: var(--bg);
-  padding: 3.5rem 2rem;
-}
-
-.stat-num {
-  font-family: var(--font-display);
-  font-size: clamp(2.5rem, 4vw, 3.5rem);
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  margin-bottom: 0.6rem;
-  background: var(--gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.stat-label {
-  font-size: 0.9rem;
-  color: var(--text-2);
-  font-weight: 400;
-}
-
-/* ============================================================
-   IMPACT SECTION
-   ============================================================ */
-.impact-section {
-  padding: var(--section-pad);
-  background: var(--bg-2);
-  border-bottom: 1px solid var(--border);
-}
-
-.impact-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6rem;
-  align-items: center;
-}
-
-.impact-info .label {
-  display: block;
-  margin-bottom: 1rem;
-}
-
-.impact-info .section-title {
-  margin-bottom: 2.5rem;
-}
-
-.impact-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.impact-item {
-  display: flex;
-  gap: 1.25rem;
-  align-items: flex-start;
-}
-
-.impact-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.1rem;
-  color: var(--green);
-  flex-shrink: 0;
-  background: var(--bg);
-}
-
-.impact-item h4 {
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  font-weight: 700;
-  margin-bottom: 0.3rem;
-  letter-spacing: -0.02em;
-}
-
-.impact-item p {
-  font-size: 0.9rem;
-  color: var(--text-2);
-  font-weight: 300;
-}
-
-/* Carbon meter */
-.carbon-wrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.carbon-meter {
-  position: relative;
-  width: 300px;
-  height: 300px;
-}
-
-.carbon-meter svg {
-  width: 100%;
-  height: 100%;
-}
-
-.carbon-label {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.carbon-value {
-  font-family: var(--font-display);
-  font-size: 3.5rem;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  background: var(--gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.carbon-desc {
-  font-size: 0.85rem;
-  color: var(--text-2);
-  margin-top: 0.4rem;
-}
-
-/* ============================================================
-   CTA SECTION
-   ============================================================ */
-.cta-section {
-  padding: var(--section-pad);
-}
-
-.cta-inner {
-  max-width: 640px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.cta-inner .section-title {
-  margin-bottom: 1.25rem;
-}
-
-.cta-sub {
-  color: var(--text-2);
-  font-size: 1.05rem;
-  line-height: 1.75;
-  margin-bottom: 2.5rem;
-  font-weight: 300;
-}
-
-.cta-form {
-  display: flex;
-  gap: 0.75rem;
-  max-width: 480px;
-  margin: 0 auto 1.5rem;
-}
-
-.cta-input {
-  flex: 1;
-  padding: 0.85rem 1.25rem;
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  color: var(--text);
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  transition: border-color 0.25s ease;
-  outline: none;
-}
-
-.cta-input:focus {
-  border-color: var(--green);
-}
-
-.cta-input::placeholder {
-  color: var(--text-3);
-}
-
-.cta-note {
-  font-size: 0.875rem;
-  color: var(--text-2);
-}
-
-.cta-note a {
-  color: var(--green);
-  transition: opacity 0.2s ease;
-}
-
-.cta-note a:hover {
-  opacity: 0.7;
-}
-
-/* Form success state */
-.cta-success {
-  padding: 1.25rem;
-  background: var(--gradient-sub);
-  border: 1px solid var(--border-hover);
-  border-radius: 0.75rem;
-  color: var(--green);
-  font-weight: 600;
-  font-size: 0.95rem;
-  animation: fadeUp 0.4s var(--ease-expo) both;
-}
-
-/* ============================================================
-   VIDEO MODAL
-   ============================================================ */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.96);
-  z-index: 9000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  animation: fadeIn 0.3s ease both;
-}
-
-.modal-box {
-  position: relative;
-  width: 100%;
-  max-width: 1100px;
-  aspect-ratio: 16 / 9;
-  background: var(--bg-2);
-  border-radius: 1rem;
-  overflow: hidden;
-  animation: fadeUp 0.4s var(--ease-expo) both;
-}
-
-.modal-close {
-  position: absolute;
-  top: -3rem;
-  right: 0;
-  color: var(--text-2);
-  font-size: 1.75rem;
-  line-height: 1;
-  padding: 0.5rem;
-  z-index: 9001;
-  transition: color 0.2s ease, transform 0.3s ease;
-}
-
-.modal-close:hover {
-  color: var(--text);
-  transform: rotate(90deg);
-}
-
-.modal-box iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-/* ============================================================
-   FOOTER
-   ============================================================ */
-.footer {
-  background: var(--bg-2);
-  border-top: 1px solid var(--border);
-}
-
-.footer-main {
-  max-width: var(--content-max);
-  margin: 0 auto;
-  padding: 4rem 2.5rem 3rem;
-  display: grid;
-  grid-template-columns: 1.75fr repeat(3, 1fr);
-  gap: 4rem;
-}
-
-.footer-brand .nav-logo {
-  margin-bottom: 1rem;
-}
-
-.footer-tagline {
-  font-size: 0.9rem;
-  color: var(--text-2);
-  line-height: 1.6;
-  max-width: 240px;
-  font-weight: 300;
-}
-
-.footer-col h4 {
-  font-family: var(--font-display);
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text);
-  margin-bottom: 1.25rem;
-}
-
-.footer-col a {
-  display: block;
-  font-size: 0.9rem;
-  color: var(--text-2);
-  margin-bottom: 0.75rem;
-  transition: color 0.2s ease;
-  font-weight: 300;
-}
-
-.footer-col a:hover {
-  color: var(--text);
-}
-
-.footer-bottom {
-  max-width: var(--content-max);
-  margin: 0 auto;
-  padding: 1.5rem 2.5rem;
-  border-top: 1px solid var(--border);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.footer-copy {
-  font-size: 0.8rem;
-  color: var(--text-3);
-}
-
-.footer-legal {
-  display: flex;
-  gap: 2rem;
-}
-
-.footer-legal a {
-  font-size: 0.8rem;
-  color: var(--text-3);
-  transition: color 0.2s ease;
-}
-
-.footer-legal a:hover {
-  color: var(--text-2);
-}
-
-/* ============================================================
-   ANIMATIONS
-   ============================================================ */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
-@media (max-width: 1024px) {
-  .product-layout,
-  .impact-layout {
-    grid-template-columns: 1fr;
-    gap: 3rem;
+export default function Home() {
+  const [scrolled,      setScrolled]      = useState(false);
+  const [activeFeature, setActiveFeature] = useState(0);
+  const [showModal,     setShowModal]     = useState(false);
+  const [email,         setEmail]         = useState('');
+  const [submitted,     setSubmitted]     = useState(false);
+
+  /* Scroll listener for sticky nav */
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  /* Lock body scroll when modal open */
+  useEffect(() => {
+    document.body.style.overflow = showModal ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [showModal]);
+
+  /* Form submit handler */
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!email) return;
+    setSubmitted(true);
   }
 
-  .features-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  return (
+    <div>
 
-  .footer-main {
-    grid-template-columns: 1fr 1fr;
-    gap: 2.5rem;
-  }
-}
+      {/* ── VIDEO MODAL ── */}
+      {showModal && (
+        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+          <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={() => setShowModal(false)} aria-label="Close">✕</button>
+            <iframe
+              src="https://www.youtube.com/embed/z8aba3sh2T0?autoplay=1"
+              title="Gripz AI Demo"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      )}
 
-@media (max-width: 768px) {
-  :root {
-    --section-pad: 5rem 0;
-    --content-pad: 0 1.5rem;
-  }
+      {/* ── NAVIGATION ── */}
+      <nav className={`nav${scrolled ? ' scrolled' : ''}`} aria-label="Main navigation">
+        <div className="nav-inner">
+          <a href="/" className="nav-logo" aria-label="Gripz AI home">
+            <span className="nav-logo-word">GRIPZ</span>
+            <span className="nav-logo-tag">AI</span>
+          </a>
+          <ul className="nav-links">
+            <li><a href="#product">Product</a></li>
+            <li><a href="#technology">Technology</a></li>
+            <li><a href="#contact" className="nav-cta">Contact</a></li>
+          </ul>
+        </div>
+      </nav>
 
-  .hero {
-    padding: 7rem 1.5rem 4rem;
-  }
+      {/* ── HERO ── */}
+      <section className="hero" aria-label="Hero">
+        <div className="hero-glow" aria-hidden="true" />
 
-  .problem-grid {
-    grid-template-columns: 1fr;
-  }
+        <div className="hero-badge label">
+          <span className="badge-dot" aria-hidden="true" />
+          DeepTech Mobility
+        </div>
 
-  .stats-row {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
+        <h1 className="hero-title display">
+          Intelligence at
+          <br />
+          <span className="gradient-text">Your Fingertips</span>
+        </h1>
 
-  .features-grid {
-    grid-template-columns: 1fr;
-  }
+        <p className="hero-sub">
+          The world's first IoT-enabled smart handlebar grip — transforming
+          two-wheelers into intelligent, connected, and safer mobility systems.
+        </p>
 
-  .footer-main {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
+        <div className="hero-actions">
+          <button className="btn btn-primary" onClick={() => setShowModal(true)}>
+            Join Beta Program
+          </button>
+          <button className="btn btn-ghost" onClick={() => setShowModal(true)}>
+            Watch Demo ↗
+          </button>
+        </div>
 
-  .footer-bottom {
-    flex-direction: column;
-    gap: 1rem;
-    text-align: center;
-  }
+        <div className="hero-scroll" aria-hidden="true" />
+      </section>
 
-  .cta-form {
-    flex-direction: column;
-  }
+      {/* ── PROBLEM ── */}
+      <section className="problem-section" aria-labelledby="problem-heading">
+        <div className="container">
+          <div className="section-header">
+            <span className="label">The Challenge</span>
+            <h2 id="problem-heading" className="section-title display">
+              Distraction is deadly
+            </h2>
+          </div>
+          <div className="problem-grid">
+            {[
+              {
+                n: '01',
+                title: 'Screen Dependency',
+                body: 'Riders constantly glance at phones for navigation, increasing cognitive load and reaction time by 40%.',
+              },
+              {
+                n: '02',
+                title: 'Gig Economy Risk',
+                body: 'Delivery riders operate 6–10 hours daily under time pressure, amplifying accident risk exponentially.',
+              },
+              {
+                n: '03',
+                title: 'No Retrofit Solutions',
+                body: 'Existing safety tech is expensive, helmet-bound, or requires a full vehicle replacement.',
+              },
+            ].map((card) => (
+              <div className="problem-card" key={card.n}>
+                <span className="problem-num">{card.n}</span>
+                <h3>{card.title}</h3>
+                <p>{card.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-  .modal-overlay {
-    padding: 1rem;
-  }
+      {/* ── PRODUCT ── */}
+      <section className="product-section section" id="product" aria-labelledby="product-heading">
+        <div className="container">
+          <div className="product-layout">
 
-  .modal-close {
-    top: -2.5rem;
-    font-size: 1.4rem;
-  }
-}
+            {/* Image */}
+            <div className="product-image-wrap">
+              <div className="product-image-bg" aria-hidden="true" />
+              <img
+                src="/product-grip.png"
+                alt="Gripz AI smart handlebar grip"
+                className="product-img"
+              />
+            </div>
 
-@media (max-width: 480px) {
-  .nav-links li:not(:last-child) {
-    display: none;
-  }
+            {/* Info */}
+            <div className="product-info">
+              <span className="label">Smart Grip System</span>
+              <h2 id="product-heading" className="section-title display">
+                Retrofit intelligence
+                <br />
+                for every handlebar
+              </h2>
+              <p className="product-desc">
+                A universal, vehicle-agnostic grip that embeds haptic motors,
+                gyroscopes, and connectivity directly into the rider's natural touchpoint.
+              </p>
+              <div className="specs">
+                {SPECS.map((s) => (
+                  <div className="spec-row" key={s.name}>
+                    <div className="spec-dot" aria-hidden="true" />
+                    <div>
+                      <div className="spec-name">{s.name}</div>
+                      <div className="spec-detail">{s.detail}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
 
-  .hero-actions {
-    flex-direction: column;
-    width: 100%;
-  }
+          </div>
+        </div>
+      </section>
 
-  .btn {
-    width: 100%;
-    justify-content: center;
-  }
+      {/* ── FEATURES ── */}
+      <section className="features-section section" id="technology" aria-labelledby="features-heading">
+        <div className="container">
+          <div className="section-header">
+            <span className="label">Core Features</span>
+            <h2 id="features-heading" className="section-title display">
+              Eye-free, intelligent,
+              <br />
+              always connected
+            </h2>
+          </div>
+          <div className="features-grid">
+            {FEATURES.map((f, i) => (
+              <div
+                key={f.title}
+                className={`feature-card${activeFeature === i ? ' active' : ''}`}
+                onMouseEnter={() => setActiveFeature(i)}
+              >
+                <div className="feature-icon-wrap" aria-hidden="true">{f.icon}</div>
+                <h3>{f.title}</h3>
+                <p>{f.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-  .product-layout {
-    gap: 2rem;
-  }
+      {/* ── STATS ── */}
+      <section className="stats-section" aria-label="Key statistics">
+        <div className="container">
+          <div className="stats-row">
+            {STATS.map((s) => (
+              <div className="stat-block" key={s.label}>
+                <div className="stat-num">{s.value}</div>
+                <div className="stat-label">{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-  .impact-layout {
-    gap: 2.5rem;
-  }
+      {/* ── IMPACT ── */}
+      <section className="impact-section section" aria-labelledby="impact-heading">
+        <div className="container">
+          <div className="impact-layout">
 
-  .carbon-meter {
-    width: 220px;
-    height: 220px;
-  }
+            <div className="impact-info">
+              <span className="label">Impact</span>
+              <h2 id="impact-heading" className="section-title display">
+                Safety meets
+                <br />
+                sustainability
+              </h2>
+              <div className="impact-list">
+                {IMPACT.map((item) => (
+                  <div className="impact-item" key={item.title}>
+                    <div className="impact-icon" aria-hidden="true">{item.icon}</div>
+                    <div>
+                      <h4>{item.title}</h4>
+                      <p>{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Carbon meter */}
+            <div className="carbon-wrap" aria-label="28% carbon reduction indicator">
+              <div className="carbon-meter">
+                <svg viewBox="0 0 200 200" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="meterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%"   stopColor="#00ff88" />
+                      <stop offset="100%" stopColor="#0077ff" />
+                    </linearGradient>
+                  </defs>
+                  {/* Track */}
+                  <circle
+                    cx="100" cy="100" r="88"
+                    fill="none"
+                    stroke="rgba(255,255,255,0.06)"
+                    strokeWidth="3"
+                  />
+                  {/* Progress — strokeDasharray = 2πr ≈ 553 */}
+                  <circle
+                    cx="100" cy="100" r="88"
+                    fill="none"
+                    stroke="url(#meterGrad)"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeDasharray="553"
+                    strokeDashoffset="138"
+                    transform="rotate(-90 100 100)"
+                  />
+                </svg>
+                <div className="carbon-label">
+                  <div className="carbon-value">−28%</div>
+                  <div className="carbon-desc">Carbon reduction</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA ── */}
+      <section className="cta-section" id="contact" aria-labelledby="cta-heading">
+        <div className="container">
+          <div className="cta-inner">
+            <h2 id="cta-heading" className="section-title display">
+              Ready to transform
+              <br />
+              your ride?
+            </h2>
+            <p className="cta-sub">
+              Join our beta programme and be among the first to experience intelligent mobility.
+            </p>
+
+            {submitted ? (
+              <div className="cta-success" role="alert">
+                🎉 You're on the list! We'll be in touch soon.
+              </div>
+            ) : (
+              <form className="cta-form" onSubmit={handleSubmit} noValidate>
+                <input
+                  type="email"
+                  className="cta-input"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  aria-label="Email address"
+                />
+                <button type="submit" className="btn btn-primary">
+                  Get Early Access
+                </button>
+              </form>
+            )}
+
+            <p className="cta-note">
+              Fleet partnerships &amp; enterprise:{' '}
+              <a href="mailto:hello@gripz.ai">hello@gripz.ai</a>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FOOTER ── */}
+      <footer className="footer" aria-label="Site footer">
+        <div className="footer-main">
+          <div className="footer-brand">
+            <div className="nav-logo" style={{ marginBottom: '0.875rem' }}>
+              <span className="nav-logo-word">GRIPZ</span>
+              <span className="nav-logo-tag">AI</span>
+            </div>
+            <p className="footer-tagline">Intelligence at your fingertips</p>
+          </div>
+
+          <div className="footer-col">
+            <h4>Product</h4>
+            <a href="#product">Features</a>
+            <a href="#technology">Technology</a>
+            <a href="#">Pricing</a>
+          </div>
+
+          <div className="footer-col">
+            <h4>Company</h4>
+            <a href="#">About</a>
+            <a href="#">Blog</a>
+            <a href="#">Careers</a>
+          </div>
+
+          <div className="footer-col">
+            <h4>Connect</h4>
+            <a href="#" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a href="#" target="_blank" rel="noreferrer">Twitter</a>
+            <a href="mailto:hello@gripz.ai">Contact</a>
+          </div>
+        </div>
+
+        <div className="footer-bottom">
+          <p className="footer-copy">© 2025 Gripz AI. All rights reserved.</p>
+          <div className="footer-legal">
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+  );
 }
