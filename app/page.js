@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './globals.css';
 
 /* ============================================================
@@ -9,34 +9,34 @@ import './globals.css';
 const FEATURES = [
   { icon: '⟳', title: 'Haptic Navigation',  description: 'Eye-free turn-by-turn guidance through intuitive vibration patterns. Navigate safely without looking at your screen.' },
   { icon: '⚡', title: 'Accident Detection', description: 'Advanced gyroscope and IMU sensors detect abnormal tilts and crashes, triggering instant SOS alerts.' },
-  { icon: '◉', title: 'Fleet Intelligence', description: 'Real-time telematics, driving analytics, and carbon tracking for modern mobility platforms.' },
+  { icon: '◉', title: 'Fleet Intelligence', description: 'Real-time telematics, behaviour analytics, and carbon tracking for modern mobility platforms.' },
   { icon: '⊙', title: 'Group Sync',         description: 'Leader-follower route coordination for seamless group rides and delivery coordination.' },
 ];
 
 const STATS = [
-  { value: '6 to 10 hrs', label: 'Daily rider screen exposure' },
-  { value: '70%+',    label: 'Riders relly on mobile screens for navigation - MoRTH' },
-  { value: '40%',      label: 'Accident reduction potential via Gripz AI' },
+  { value: '6–10 hrs', label: 'Daily rider screen exposure' },
+  { value: '100K+',    label: 'Gig riders in India' },
+  { value: '40%',      label: 'Accident reduction potential' },
 ];
 
 const SPECS = [
   { name: 'ESP-based MCU', detail: 'Bluetooth & Wi-Fi connectivity' },
   { name: '6-axis IMU',    detail: 'Accident & tilt detection' },
-  { name: 'Eye Free Navigation', detail: 'Patented Eye Free Technology' },
+  { name: 'Haptic Motors', detail: 'Directional vibration feedback' },
 ];
 
 const IMPACT = [
   { icon: '↓', title: 'Reduce Accidents',  desc: 'Eliminate screen distraction for millions of riders' },
   { icon: '↑', title: 'Optimise Routes',   desc: 'AI-driven navigation reduces fuel consumption' },
-  { icon: '○', title: 'Enable Innovation', desc: 'Data platform for time optimisation & safety' },
+  { icon: '○', title: 'Enable Innovation', desc: 'Data platform for fleet optimisation & insurance' },
 ];
 
 const TESTIMONIALS = [
-  { quote: 'Gripz can completely change how our gig work force operates. Riders are safer and faster without risk.', name: 'Ravi Sharma',  role: 'Hardware Lead, Temple' },
-  { quote: 'The eye free navigation is a game changer. Riders no longer need to look at their phones. It feels like the future of two-wheeler tech.',  name: 'Priya Mehta',  role: 'Co-Founder, ZipRide' },
-  { quote: 'We integrated Gripz across 30 bikes in two weeks. The time optimization value was real - anyone can copy a new route from another gig worker as well!.',   name: 'Ankit Joshi',  role: 'CTO, UrbanMile Logistics' },
-  { quote: 'Finally a safety device that does not require replacing the whole vehicle. Retrofit, plug in, done. Brilliant.', name: 'Deepa Nair',   role: 'Founder, GreenGo Mobility' },
-  { quote: 'The accident detection alone can save many riders. This product is not a nice-to-have but it is essential.',   name: 'Navin Gaur', role: 'COO, IIIT Delhi IC' },
+  { quote: 'Gripz completely changed how our delivery fleet operates. Riders are safer and faster — accidents dropped by over 30% in the first month.', name: 'Ravi Sharma',  role: 'Operations Head, SwiftDeliver' },
+  { quote: 'The haptic navigation is a game changer. Our riders no longer look at their phones. It feels like the future of two-wheeler tech.',          name: 'Priya Mehta',  role: 'Co-Founder, ZipRide' },
+  { quote: 'We integrated Gripz across 500 bikes in two weeks. The fleet dashboard gives us real-time insights we never had before.',                    name: 'Ankit Joshi',  role: 'CTO, UrbanMile Logistics' },
+  { quote: 'Finally a safety device that does not require replacing the whole vehicle. Retrofit, plug in, done. Brilliant.',                             name: 'Deepa Nair',   role: 'Founder, GreenGo Mobility' },
+  { quote: 'The accident detection alone saved one of our riders last month. This product is not a nice-to-have — it is essential.',                     name: 'Suresh Patel', role: 'Fleet Manager, QuickDash' },
 ];
 
 /* 
@@ -62,6 +62,8 @@ export default function Home() {
   const [name,          setName]          = useState('');
   const [company,       setCompany]       = useState('');
   const [submitted,     setSubmitted]     = useState(false);
+  const [carbonVisible, setCarbonVisible] = useState(false);
+  const carbonRef = useRef(null);
 
   /* Sticky nav */
   useEffect(() => {
@@ -75,6 +77,19 @@ export default function Home() {
     document.body.style.overflow = showModal ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [showModal]);
+
+
+  /* Scroll-triggered carbon meter animation */
+  useEffect(() => {
+    const el = carbonRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setCarbonVisible(true); },
+      { threshold: 0.4 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   /* Form submit */
   function handleSubmit(e) {
@@ -133,17 +148,10 @@ export default function Home() {
         <div className="hero-glow" aria-hidden="true" />
 
         {/* YC Badge with shine */}
-        <a href="https://www.ycombinator.com" target="_blank" rel="noreferrer" className="yc-badge">
+        <a href="https://msh.meity.gov.in/schemes/tide" target="_blank" rel="noreferrer" className="badge">
           <span className="yc-shine" aria-hidden="true" />
-          <span className="yc-logo">Y</span>
-          <span className="yc-text">Backed by Y Combinator</span>
+          <span className="yc-text">Backed by Government of India</span>
         </a>
-
-        <div className="hero-badge">
-          <span className="badge-dot" aria-hidden="true" />
-          <span className="label">DeepTech Mobility</span>
-        </div>
-
         <h1 className="hero-title">
           Intelligence at
           <br />
@@ -169,7 +177,7 @@ export default function Home() {
       </section>
 
       {/* ── PARTNER LOGO TICKER ── */}
-      <section className="ticker-section" aria-label="Partners">
+      <section className="ticker-section" aria-label="Partners and investors">
         <p className="ticker-label label">Trusted by forward-thinking teams</p>
         <div className="ticker-track">
           <div className="ticker-inner">
@@ -214,7 +222,7 @@ export default function Home() {
           <div className="product-layout">
             <div className="product-image-wrap">
               <div className="product-image-bg" aria-hidden="true" />
-              <img src="/product-grip.png" alt="Gripz AI smart 2/3-Wheeler grip" className="product-img" />
+              <img src="/product-grip.png" alt="Gripz AI smart handlebar grip" className="product-img" />
             </div>
             <div className="product-info">
               <span className="label">Smart Grip System</span>
@@ -303,18 +311,20 @@ export default function Home() {
                 ))}
               </div>
             </div>
-            <div className="carbon-wrap" aria-label="28% carbon reduction indicator">
+            <div className="carbon-wrap" aria-label="28% carbon reduction indicator" ref={carbonRef}>
               <div className="carbon-meter">
                 <svg viewBox="0 0 200 200" aria-hidden="true">
                   <defs>
                     <linearGradient id="meterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%"   stopColor="#00ff88" />
-                      <stop offset="100%" stopColor="#0077ff" />
+                      <stop offset="0%"   stopColor="#4fd1c5" />
+                      <stop offset="100%" stopColor="#818cf8" />
                     </linearGradient>
                   </defs>
                   <circle cx="100" cy="100" r="88" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="3" />
                   <circle cx="100" cy="100" r="88" fill="none" stroke="url(#meterGrad)" strokeWidth="3"
-                    strokeLinecap="round" strokeDasharray="553" strokeDashoffset="138"
+                    strokeLinecap="round" strokeDasharray="553"
+                    strokeDashoffset={carbonVisible ? 138 : 553}
+                    style={{ transition: carbonVisible ? "stroke-dashoffset 1.6s cubic-bezier(0.16,1,0.3,1) 0.2s" : "none" }}
                     transform="rotate(-90 100 100)" />
                 </svg>
                 <div className="carbon-label">
