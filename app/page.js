@@ -39,16 +39,11 @@ const TESTIMONIALS = [
   { quote: 'The accident detection alone saved one of our riders last month. This product is not a nice-to-have — it is essential.',                     name: 'Suresh Patel', role: 'Fleet Manager, QuickDash' },
 ];
 
-/* 
-  PARTNER LOGOS — replace src values with your real logo files
-  once uploaded to the /public folder. Name them logo1.png, logo2.png, logo3.png
-*/
 const PARTNER_LOGOS = [
   { name: 'Partner 1', src: '/logo1.png' },
   { name: 'Partner 2', src: '/logo2.png' },
   { name: 'Partner 3', src: '/logo3.png' },
 ];
-// Duplicate for seamless infinite scroll
 const TICKER_LOGOS = [...PARTNER_LOGOS, ...PARTNER_LOGOS, ...PARTNER_LOGOS];
 
 /* ============================================================
@@ -78,7 +73,6 @@ export default function Home() {
     return () => { document.body.style.overflow = ''; };
   }, [showModal]);
 
-
   /* Scroll-triggered carbon meter animation */
   useEffect(() => {
     const el = carbonRef.current;
@@ -98,9 +92,11 @@ export default function Home() {
     setSubmitted(true);
   }
 
-  /* Smooth scroll to contact */
-  function scrollToContact() {
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+  /* CHANGE 1 — scroll without changing the URL.
+     e.preventDefault() stops the browser from adding #product / #contact to the URL.
+     The page still glides smoothly to the right spot. */
+  function scrollTo(id) {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   }
 
   return (
@@ -121,23 +117,23 @@ export default function Home() {
         </div>
       )}
 
-      {/* ── NAVIGATION — macOS liquid glass style, centered links ── */}
+      {/* ── NAVIGATION ── */}
+      {/* CHANGE 1 — every nav link now calls scrollTo() and prevents the URL from changing */}
       <nav className={`nav${scrolled ? ' scrolled' : ''}`} aria-label="Main navigation">
         <div className="nav-inner">
-          {/* Logo — left */}
           <a href="/" className="nav-logo" aria-label="Gripz AI home">
+            {/* CHANGE 2 — logo height controlled by nav-logo-img in CSS (bumped to 42px) */}
             <img src="/logo.png" alt="Gripz AI" className="nav-logo-img" />
           </a>
 
-          {/* Centered pill */}
           <div className="nav-pill">
-            <a href="#product">Product</a>
-            <a href="#technology">Technology</a>
-            <a href="#contact">Contact</a>
+            <a href="#product"    onClick={(e) => { e.preventDefault(); scrollTo('product');    }}>Product</a>
+            <a href="#technology" onClick={(e) => { e.preventDefault(); scrollTo('technology'); }}>Technology</a>
+            <a href="#contact"    onClick={(e) => { e.preventDefault(); scrollTo('contact');    }}>Contact</a>
           </div>
 
-          {/* Right CTA */}
-          <a href="#contact" className="nav-right-cta btn btn-primary" onClick={(e) => { e.preventDefault(); scrollToContact(); }}>
+          <a href="#contact" className="nav-right-cta btn btn-primary"
+             onClick={(e) => { e.preventDefault(); scrollTo('contact'); }}>
             Join Beta
           </a>
         </div>
@@ -147,11 +143,11 @@ export default function Home() {
       <section className="hero" aria-label="Hero">
         <div className="hero-glow" aria-hidden="true" />
 
-        {/* Government Badge with shine */}
         <a href="https://msh.meity.gov.in/schemes/tide" target="_blank" rel="noreferrer" className="yc-badge">
           <span className="yc-shine" aria-hidden="true" />
           <span className="yc-text">Backed by Government of India</span>
         </a>
+
         <h1 className="hero-title">
           Intelligence at
           <br />
@@ -163,8 +159,9 @@ export default function Home() {
           two-wheelers into intelligent, connected, and safer mobility systems.
         </p>
 
+        {/* CHANGE 6 — removed flex-wrap so buttons never wrap and push the scroll line out of place */}
         <div className="hero-actions">
-          <button className="btn btn-primary" onClick={scrollToContact}>
+          <button className="btn btn-primary" onClick={() => scrollTo('contact')}>
             Join Beta Program
           </button>
           <button className="btn btn-ghost" onClick={() => setShowModal(true)}>
@@ -172,13 +169,13 @@ export default function Home() {
           </button>
         </div>
 
-        {/* Scroll indicator — responsive, hidden on mobile */}
         <div className="hero-scroll" aria-hidden="true" />
       </section>
 
       {/* ── PARTNER LOGO TICKER ── */}
+      {/* CHANGE 3 — label text size + logo size handled in CSS */}
       <section className="ticker-section" aria-label="Partners and investors">
-        <p className="ticker-label label">Trusted by forward-thinking teams</p>
+        <p className="ticker-label">Trusted by forward-thinking teams</p>
         <div className="ticker-track">
           <div className="ticker-inner">
             {TICKER_LOGOS.map((logo, i) => (
@@ -188,7 +185,6 @@ export default function Home() {
             ))}
           </div>
         </div>
-        {/* Fade edges */}
         <div className="ticker-fade-left"  aria-hidden="true" />
         <div className="ticker-fade-right" aria-hidden="true" />
       </section>
@@ -311,6 +307,8 @@ export default function Home() {
                 ))}
               </div>
             </div>
+
+            {/* CHANGE 4 — strokeWidth bumped from 3 → 7 so the coloured arc is clearly visible */}
             <div className="carbon-wrap" aria-label="28% carbon reduction indicator" ref={carbonRef}>
               <div className="carbon-meter">
                 <svg viewBox="0 0 200 200" aria-hidden="true">
@@ -320,8 +318,8 @@ export default function Home() {
                       <stop offset="100%" stopColor="#818cf8" />
                     </linearGradient>
                   </defs>
-                  <circle cx="100" cy="100" r="88" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="3" />
-                  <circle cx="100" cy="100" r="88" fill="none" stroke="url(#meterGrad)" strokeWidth="3"
+                  <circle cx="100" cy="100" r="88" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="7" />
+                  <circle cx="100" cy="100" r="88" fill="none" stroke="url(#meterGrad)" strokeWidth="7"
                     strokeLinecap="round" strokeDasharray="553"
                     strokeDashoffset={carbonVisible ? 138 : 553}
                     style={{ transition: carbonVisible ? "stroke-dashoffset 1.6s cubic-bezier(0.16,1,0.3,1) 0.2s" : "none" }}
@@ -348,7 +346,6 @@ export default function Home() {
           </div>
         </div>
         <div className="testi-track-wrap">
-          {/* Fade edges */}
           <div className="testi-fade-left"  aria-hidden="true" />
           <div className="testi-fade-right" aria-hidden="true" />
           <div className="testi-track">
@@ -427,7 +424,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── GIANT WORDMARK (like cubic.dev footer) ── */}
+      {/* ── GIANT WORDMARK ── */}
       <div className="wordmark-section" aria-hidden="true">
         <span className="wordmark-text">GRIPZ AI</span>
       </div>
@@ -436,15 +433,16 @@ export default function Home() {
       <footer className="footer" aria-label="Site footer">
         <div className="footer-main">
           <div className="footer-brand">
+            {/* CHANGE 5 — footer logo uses footer-logo-img class which is bigger */}
             <a href="/" style={{ display: 'inline-block', marginBottom: '0.875rem' }}>
-              <img src="/logo.png" alt="Gripz AI" className="nav-logo-img" />
+              <img src="/logo.png" alt="Gripz AI" className="footer-logo-img" />
             </a>
             <p className="footer-tagline">Intelligence at your fingertips</p>
           </div>
           <div className="footer-col">
             <h4>Product</h4>
-            <a href="#product">Features</a>
-            <a href="#technology">Technology</a>
+            <a href="#product"    onClick={(e) => { e.preventDefault(); scrollTo('product');    }}>Features</a>
+            <a href="#technology" onClick={(e) => { e.preventDefault(); scrollTo('technology'); }}>Technology</a>
             <a href="#">Pricing</a>
           </div>
           <div className="footer-col">
