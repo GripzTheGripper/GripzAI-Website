@@ -96,7 +96,11 @@ img { display: block; max-width: 100%; }
 }
 
 .nav-logo { justify-self: start; }
-.nav-logo-img { height: 30px; width: auto; display: block; }
+.nav-logo-img { height: 42px; width: auto; display: block; }
+.footer-logo-img { height: 52px; width: auto; display: block; }
+
+/* CHANGE 5 — footer logo is larger than nav logo */
+.footer-logo-img { height: 52px; width: auto; display: block; }
 
 .nav-pill {
   display: flex;
@@ -362,7 +366,9 @@ img { display: block; max-width: 100%; }
   text-align: center;
   display: block;
   margin-bottom: 2rem;
-  color: var(--text-3);
+  color: var(--text-2);
+  font-size: 0.85rem !important;
+  letter-spacing: 0.18em;
 }
 
 .ticker-track { overflow: hidden; position: relative; }
@@ -386,15 +392,15 @@ img { display: block; max-width: 100%; }
   align-items: center;
   justify-content: center;
   min-width: 140px;
-  height: 56px;   /* was 48px */
+  height: 68px;   /* was 56px — taller container for bigger logos */
 }
 
 .ticker-logo {
-  height: 44px;              /* was 36px — bigger */
+  height: 60px;              /* bumped to 60px — larger logos */
   width: auto;
   object-fit: contain;
   filter: none;              /* was brightness(0) invert(1) — now real colours */
-  opacity: 0.65;             /* was 0.4 — more visible */
+  opacity: 0.8;              /* was 0.65 — more visible */
   transition: opacity 0.3s ease;
 }
 
@@ -1044,16 +1050,22 @@ img { display: block; max-width: 100%; }
    RESPONSIVE
    ============================================================ */
 @media (max-width: 1024px) {
+  /* CHANGE 6 — hide scroll indicator on tablets too, not just mobile */
+  .hero-scroll { display: none; }
+
   .product-layout, .impact-layout { grid-template-columns: 1fr; gap: 3rem; }
   .features-grid { grid-template-columns: repeat(2, 1fr); }
   .footer-main { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+}
+
+@media (max-width: 1024px) {
+  .hero-scroll { display: none; }
 }
 
 @media (max-width: 768px) {
   :root { --section-pad: 5rem 0; --content-pad: 0 1.5rem; }
 
   .hero { padding: 7rem 1.5rem 4rem; }
-  .hero-scroll { display: none; }
 
   .problem-grid { grid-template-columns: 1fr; }
   .features-grid { grid-template-columns: 1fr; }
