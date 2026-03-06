@@ -7,36 +7,36 @@ import './globals.css';
    DATA
    ============================================================ */
 const FEATURES = [
-  { icon: '⟳', title: 'Haptic Navigation',  description: 'Eye-free turn-by-turn guidance through intuitive vibration patterns. Navigate safely without looking at your screen.' },
-  { icon: '⚡', title: 'Accident Detection', description: 'Advanced gyroscope and IMU sensors detect abnormal tilts and crashes, triggering instant SOS alerts.' },
+  { icon: '⟳', title: 'Haptic Navigation',  description: 'Eye-free turn-by-turn guidance through intuitive patented mechanism. Navigate safely without looking at your screen.' },
+  { icon: '⚡', title: 'Accident Detection', description: 'Advanced accident detection sensors detect abnormal tilts and crashes, triggering instant SOS alerts.' },
   { icon: '◉', title: 'Fleet Intelligence', description: 'Real-time telematics, behaviour analytics, and carbon tracking for modern mobility platforms.' },
   { icon: '⊙', title: 'Group Sync',         description: 'Leader-follower route coordination for seamless group rides and delivery coordination.' },
 ];
 
 const STATS = [
-  { value: '6–10 hrs', label: 'Daily rider screen exposure' },
-  { value: '100K+',    label: 'Gig riders in India' },
+  { value: '6 to 10 hrs', label: 'Daily rider screen exposure' },
+  { value: '260M+',    label: 'Riders in India' },
   { value: '40%',      label: 'Accident reduction potential' },
 ];
 
 const SPECS = [
-  { name: 'ESP-based MCU', detail: 'Bluetooth & Wi-Fi connectivity' },
-  { name: '6-axis IMU',    detail: 'Accident & tilt detection' },
-  { name: 'Haptic Motors', detail: 'Directional vibration feedback' },
+  { name: 'ESP-based MCU', detail: 'Bluetooth & Wi-Fi connectivity for multiple use-cases' },
+  { name: 'Eye-Free GPS',    detail: 'No need to see the screen, focus on the route!' },
+  { name: 'Integrated Safety', detail: 'Accident and Tilt Detection' },
 ];
 
 const IMPACT = [
   { icon: '↓', title: 'Reduce Accidents',  desc: 'Eliminate screen distraction for millions of riders' },
   { icon: '↑', title: 'Optimise Routes',   desc: 'AI-driven navigation reduces fuel consumption' },
-  { icon: '○', title: 'Enable Innovation', desc: 'Data platform for fleet optimisation & insurance' },
+  { icon: '○', title: 'Enable Innovation', desc: 'Data platform for fleet optimisation & route connects' },
 ];
 
 const TESTIMONIALS = [
-  { quote: 'Gripz completely changed how our delivery fleet operates. Riders are safer and faster — accidents dropped by over 30% in the first month.', name: 'Ravi Sharma',  role: 'Operations Head, SwiftDeliver' },
-  { quote: 'The haptic navigation is a game changer. Our riders no longer look at their phones. It feels like the future of two-wheeler tech.',          name: 'Priya Mehta',  role: 'Co-Founder, ZipRide' },
-  { quote: 'We integrated Gripz across 500 bikes in two weeks. The fleet dashboard gives us real-time insights we never had before.',                    name: 'Ankit Joshi',  role: 'CTO, UrbanMile Logistics' },
+  { quote: 'Gripz can change how gig/delivery fleet operates. Riders can be safer and faster while reducing the accident risks.', name: 'Ravi Sharma',  role: 'Operations Head, SwiftDeliver' },
+  { quote: 'The eye-free navigation is a game changer. Riders no longer need to look at their phones. It feels like the future of two-wheeler tech.',          name: 'Priya Mehta',  role: 'Co-Founder, BikeMania' },
+  { quote: 'I integrated GripzAI in my vehicle and the eye-free GPS removed the screen dependencies. I can focus while driving.',                    name: 'Ankit Joshi',  role: 'Gig Worker, Zomato' },
   { quote: 'Finally a safety device that does not require replacing the whole vehicle. Retrofit, plug in, done. Brilliant.',                             name: 'Deepa Nair',   role: 'Founder, GreenGo Mobility' },
-  { quote: 'The accident detection alone saved one of our riders last month. This product is not a nice-to-have — it is essential.',                     name: 'Suresh Patel', role: 'Fleet Manager, QuickDash' },
+  { quote: 'This helped me drive quickly and deliver my parcels quickly.',                     name: 'Suresh Nagaraju', role: 'Gig Worker, InstaMark/Rapido' },
 ];
 
 const PARTNER_LOGOS = [
@@ -199,7 +199,7 @@ export default function Home() {
           <div className="problem-grid">
             {[
               { n: '01', title: 'Screen Dependency',    body: 'Riders constantly glance at phones for navigation, increasing cognitive load and reaction time by 40%.' },
-              { n: '02', title: 'Gig Economy Risk',      body: 'Delivery riders operate 6–10 hours daily under time pressure, amplifying accident risk exponentially.' },
+              { n: '02', title: 'Gig Economy Risk',      body: 'Delivery riders operate 6 to 10 hours daily under time pressure, amplifying accident risk exponentially.' },
               { n: '03', title: 'No Retrofit Solutions', body: 'Existing safety tech is expensive, helmet-bound, or requires a full vehicle replacement.' },
             ].map((card) => (
               <div className="problem-card" key={card.n}>
@@ -429,7 +429,7 @@ export default function Home() {
 
             <p className="cta-note">
               Fleet partnerships &amp; enterprise:{' '}
-              <a href="mailto:hello@gripz.ai">hello@gripz.ai</a>
+              <a href="mailto:hello@gripz.ai">surya@gripz.ai</a>
             </p>
           </div>
         </div>
@@ -454,23 +454,20 @@ export default function Home() {
             <h4>Product</h4>
             <a href="#product"    onClick={(e) => { e.preventDefault(); scrollTo('product');    }}>Features</a>
             <a href="#technology" onClick={(e) => { e.preventDefault(); scrollTo('technology'); }}>Technology</a>
-            <a href="#">Pricing</a>
           </div>
           <div className="footer-col">
             <h4>Company</h4>
             <a href="#">About</a>
-            <a href="#">Blog</a>
             <a href="#">Careers</a>
           </div>
           <div className="footer-col">
             <h4>Connect</h4>
             <a href="#" target="_blank" rel="noreferrer">LinkedIn</a>
-            <a href="#" target="_blank" rel="noreferrer">Twitter</a>
-            <a href="mailto:hello@gripz.ai">Contact</a>
+            <a href="mailto:surya@gripz.ai">Contact</a>
           </div>
         </div>
         <div className="footer-bottom">
-          <p className="footer-copy">© 2025 Gripz AI. All rights reserved.</p>
+          <p className="footer-copy">© 2026 GripzAI Private Limited. All rights reserved.</p>
           <div className="footer-legal">
             <a href="#">Privacy</a>
             <a href="#">Terms</a>
