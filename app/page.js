@@ -382,7 +382,18 @@ export default function Home() {
                 🎉 You're on the list! We'll be in touch soon.
               </div>
             ) : (
-              <form className="beta-form" onSubmit={handleSubmit} noValidate>
+              <form className="beta-form" onSubmit={async function handleSubmit(e) {
+  e.preventDefault();
+  if (!email) return;
+  
+  await fetch('https://formspree.io/f/xbdzjyzq', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, email, company }),
+  });
+  
+  setSubmitted(true);
+}} noValidate>
                 <div className="beta-form-row">
                   <div className="beta-form-field">
                     <label htmlFor="beta-name">Full Name</label>
