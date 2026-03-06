@@ -255,23 +255,6 @@ img { display: block; max-width: 100%; }
   justify-content: center;
   animation: fadeUp 0.7s var(--ease-expo) 0.55s both;
 }
-
-
-.hero-scroll::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%;
-  height: 40%;
-  background: var(--gradient);
-  animation: scrollDown 2s var(--ease-expo) infinite;
-}
-
-@keyframes scrollDown {
-  0%   { transform: translateY(-100%); }
-  100% { transform: translateY(300%); }
-}
-
 /* ============================================================
    BUTTONS
    ============================================================ */
@@ -1013,21 +996,6 @@ img { display: block; max-width: 100%; }
 /* ============================================================
    RESPONSIVE
    ============================================================ */
-@media (max-width: 1024px) {
-  /* CHANGE 6 — hide scroll indicator on tablets too, not just mobile */
-  .hero-scroll { display: none; }
-
-  .product-layout, .impact-layout { grid-template-columns: 1fr; gap: 3rem; }
-  .features-grid { grid-template-columns: repeat(2, 1fr); }
-  .footer-main { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
-}
-
-
-@media (min-width: 1280px) {
-  .hero-scroll {
-    display: block;
-  }
-}
 @media (max-width: 768px) {
   :root { --section-pad: 5rem 0; --content-pad: 0 1.5rem; }
 
