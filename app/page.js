@@ -147,8 +147,8 @@ export default function Home() {
       <section className="hero" aria-label="Hero">
         <div className="hero-glow" aria-hidden="true" />
 
-        {/* YC Badge with shine */}
-        <a href="https://msh.meity.gov.in/schemes/tide" target="_blank" rel="noreferrer" className="badge">
+        {/* Government Badge with shine */}
+        <a href="https://msh.meity.gov.in/schemes/tide" target="_blank" rel="noreferrer" className="yc-badge">
           <span className="yc-shine" aria-hidden="true" />
           <span className="yc-text">Backed by Government of India</span>
         </a>
