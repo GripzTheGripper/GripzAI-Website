@@ -284,17 +284,6 @@ img { display: block; max-width: 100%; }
   animation: fadeUp 0.7s var(--ease-expo) 0.55s both;
 }
 
-.hero-scroll {
-  position: absolute;
-  bottom: 2.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 1px;
-  height: 56px;
-  background: var(--border);
-  overflow: hidden;
-  display: none;
-}
 
 .hero-scroll::after {
   content: '';
@@ -1061,9 +1050,7 @@ img { display: block; max-width: 100%; }
   .footer-main { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
 }
 
-@media (max-width: 1024px) {
-  .hero-scroll { display: none; }
-}
+
 @media (min-width: 1280px) {
   .hero-scroll {
     display: block;
