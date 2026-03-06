@@ -227,8 +227,7 @@ export default function Home() {
                 <br />for every handlebar
               </h2>
               <p className="product-desc">
-                A universal, vehicle-agnostic grip that embeds haptic motors,
-                gyroscopes, and connectivity directly into the rider's natural touchpoint.
+                A universal, vehicle-agnostic grip that embeds multiple sensors to create physical intelligence and connectivity directly into the rider's natural touchpoint.
               </p>
               <div className="specs">
                 {SPECS.map((s) => (
