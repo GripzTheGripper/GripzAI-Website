@@ -1,3 +1,4 @@
+import './globals.css';
 export const metadata = {
   title: 'Gripz AI - Intelligence at Your Fingertips',
   description:
