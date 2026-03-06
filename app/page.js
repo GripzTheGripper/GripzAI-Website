@@ -154,7 +154,7 @@ export default function Home() {
         </h1>
 
         <p className="hero-sub">
-          Gripz AI is the first patented central nervous system for two-wheelers, 
+         The first patented central nervous system for two/three-wheelers, 
          turning your handlebar into an intelligent command center that feels the road, 
          reads the rider, and responds before danger does.
          </p>
