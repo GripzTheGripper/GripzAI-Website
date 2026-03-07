@@ -444,7 +444,7 @@ img { display: block; max-width: 100%; }
 
 .product-img {
   width: 100%;
-  max-width: 520px;
+  max-width: 620px;
   border-radius: 1.5rem;
   position: relative;
   z-index: 1;
