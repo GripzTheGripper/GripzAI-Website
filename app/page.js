@@ -168,8 +168,6 @@ export default function Home() {
             Watch Demo ↗
           </button>
         </div>
-
-        <div className="hero-scroll" aria-hidden="true" />
       </section>
 
       {/* ── PARTNER LOGO TICKER ── */}
