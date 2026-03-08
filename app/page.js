@@ -107,7 +107,7 @@ export default function Home() {
           <div className="modal-box" onClick={(e) => e.stopPropagation()}>
             <button className="modal-close" onClick={() => setShowModal(false)} aria-label="Close">✕</button>
             <iframe
-              src="https://www.youtube.com/embed/z8aba3sh2T0?autoplay=1"
+              src="https://www.youtube.com/embed/dUV6GwNLsvY?autoplay=1"
               title="Gripz AI Demo"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
