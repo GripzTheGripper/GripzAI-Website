@@ -11,22 +11,6 @@
 
 ---
 
-## 📋 Table of Contents
-
-- [About](#about)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Getting Started](#getting-started)
-- [Deployment](#deployment)
-- [Project Structure](#project-structure)
-- [Customization](#customization)
-- [Performance](#performance)
-- [Browser Support](#browser-support)
-- [Contributing](#contributing)
-- [License](#license)
-
----
-
 Introduction
 
 Gripz AI is revolutionizing two-wheeler safety through innovative and patented IoT technology. This website showcases our smart handlebar grip system!
@@ -180,24 +164,6 @@ const stats = [
    ```
 
 ---
-
-##  Performance
-
-- **Lighthouse Score:** 95+ (Performance, Accessibility, Best Practices, SEO)
-- **First Contentful Paint:** <1s
-- **Time to Interactive:** <2s
-- **Total Bundle Size:** ~150KB (gzipped)
-
-### Optimization Features
-✅ Static site generation (SSG)  
-✅ Optimized CSS with no runtime overhead  
-✅ Minimal JavaScript bundle  
-✅ All animations use CSS for 60fps performance  
-✅ Font preloading for faster text rendering  
-✅ Semantic HTML for better SEO  
-
----
-
 ## Contributing
 
 This is a proprietary project for Gripz AI. For internal contributions:
