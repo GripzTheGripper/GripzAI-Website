@@ -2,7 +2,7 @@
   <h1>🚀 Gripz AI Website</h1>
   <p><strong>Intelligence at Your Fingertips</strong></p>
   
-  <p> Official website for Gripz AI - The world's first IoT-enabled smart handlebar grip transforming two-wheelers into intelligent, connected, and safer mobility systems.</p>
+  <p> Official website for Gripz AI - The world's first patented IoT-enabled smart handlebar grip transforming two-wheelers into intelligent, connected, and safer mobility systems.</p>
   
   ![Next.js](https://img.shields.io/badge/Next.js-14.0-black?style=for-the-badge&logo=next.js)
   ![React](https://img.shields.io/badge/React-18.2-61DAFB?style=for-the-badge&logo=react)
@@ -31,7 +31,7 @@ Introduction
 
 Gripz AI is revolutionizing two-wheeler safety through innovative and patented IoT technology. This website showcases our smart handlebar grip system!
 
-Visit the live site: **[gripz.ai](https://gripz.ai)** *(coming soon)*
+Visit the live site: **[gripz.ai](https://gripz.ai)** 
 
 ---
 
