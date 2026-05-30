@@ -44,8 +44,9 @@ const PARTNER_LOGOS = [
   { name: 'Partner 3', src: '/logo3.png' },
   { name: 'Partner 4', src: '/logo4.png' },
   { name: 'Partner 4', src: '/logo5.png' },
+  { name: 'Partner 4', src: '/logo6.png' },
 ];
-const TICKER_LOGOS = [...PARTNER_LOGOS, ...PARTNER_LOGOS, ...PARTNER_LOGOS, ...PARTNER_LOGOS, ...PARTNER_LOGOS];
+const TICKER_LOGOS = [...PARTNER_LOGOS, ...PARTNER_LOGOS, ...PARTNER_LOGOS, ...PARTNER_LOGOS, ...PARTNER_LOGOS, ...PARTNER_LOGOS];
 
 /* ============================================================
    COMPONENT
